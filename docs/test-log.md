@@ -16,4 +16,4 @@ Static packaging is not evidence that the game detected or ran this mod.
 
 ## Gate 2 — API findings and atmosphere
 
-Blocked by Gate 1. Record API observations from the installed build and attach day/night, interior/exterior, rain, and weather-transition evidence before marking atmosphere complete.
+Source candidate prepared; blocked by Gate 1 for in-game acceptance. Record API observations from the installed build and attach day/night, interior/exterior, rain, and weather-transition evidence. Test disabling and reloading for a clean vanilla look. Check nearby visibility, interior legibility, and `console.txt` for repeated errors. The implementation uses climate float IDs and overrides listed in the [current public API](https://projectzomboid.com/modding/zombie/iso/weather/ClimateManager.html) and [ClimateFloat methods](https://projectzomboid.com/modding/zombie/iso/weather/ClimateManager.ClimateFloat.html); their behavior in the installed Build 42 patch is unproven.
