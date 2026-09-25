@@ -1,13 +1,13 @@
 # PROJECT TERM — future-war horror for Project Zomboid
 
-Early Build 42 single-player prototype. It contains a **mod-menu/load diagnostic and an experimental atmosphere pass**. Version 0.3.1 loaded in a single-player session on **42.20.4 b0bbce05d5**; version 0.3.3 adds a cold light tint and a direct F8 comparison key, and has **not yet been tested in game**. Daylight appearance, weather behavior, mod disable/reload, and full compatibility are unverified. It does not yet contain machines, aircraft, props, or weapons.
+Early Build 42 single-player prototype. It contains a **mod-menu/load diagnostic and an experimental atmosphere pass**. Version 0.3.3 loaded on **42.20.4 b0bbce05d5** and F8 key presses registered, but the disabled update repeatedly threw a Lua exception. Version 0.3.4 fixes that call and **needs another game check**. Daylight appearance, weather behavior, mod disable/reload, and full compatibility are unverified. It does not yet contain machines, aircraft, props, or weapons.
 
 ## Install and test the first gate
 
 1. Run `python3 tools/package.py`. The resulting ZIP is under `dist/`.
 2. Either clone this repository with GitHub Desktop directly to `C:\Users\YOUR_NAME\Zomboid\mods\project-term-mod-pack`, or extract the ZIP's `project-term-mod-pack` folder there. The metadata must be at `...\Zomboid\mods\project-term-mod-pack\42\mod.info`.
 3. Completely restart Project Zomboid Build 42. Find **PROJECT TERM - Future War** in the Mods menu and enable it for a disposable single-player save.
-4. Load the save. Copy `%UserProfile%\Zomboid\console.txt` immediately afterward and look for `[PROJECT TERM] v0.3.3 client Lua loaded`, `Atmosphere climate layer active`, and any errors. A `Cold tint disabled after color API error` line means the optional color channel failed, even if the existing haze layer still runs.
+4. Load the save. Copy `%UserProfile%\Zomboid\console.txt` immediately afterward and look for `[PROJECT TERM] v0.3.4 client Lua loaded`, `Atmosphere climate layer active`, and any errors. A `Cold tint disabled after color API error` line means the optional color channel failed, even if the existing haze layer still runs.
 5. Record the **exact full version displayed by the game** (including patch number) and the menu screenshot in `docs/test-log.md`. Record whether the same save loads cleanly after a restart. Do not mark the gate passed from a ZIP check alone.
 
 If it does not appear, check the precise folder nesting above, remove older copies, restart, and attach the relevant `console.txt` errors. Test a new save first; existing-save behavior remains unverified. When cloning in Desktop, choose `...\Zomboid\mods` as the **parent** Local Path so Desktop creates `project-term-mod-pack` within it, then select the `codex/b42-mod-menu-foundation` branch.

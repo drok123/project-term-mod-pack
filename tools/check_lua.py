@@ -78,6 +78,7 @@ try:
         function isServer() return false end
         SandboxVars = {ProjectTerm = {AtmosphereEnabled=true, AtmosphereIntensity=1,
             HazeDensity=1, Darkness=1}}
+        next = nil -- Build 42 Kahlua does not expose Lua 5.4's next() global
     ''')
     run(str(SOURCE).encode(), filename=True)
     run(b'''

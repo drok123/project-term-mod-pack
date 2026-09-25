@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.4 — fix repeated F8-off runtime exception
+
+- Replaced an unsupported Lua `next()` call in the disabled atmosphere path. A 42.20.4 game log shows the F8 OFF/ON key events work but the minute update threw 14 exceptions while OFF.
+- The local Lua mock now runs with `next` unavailable. In-game recheck of 0.3.4 is pending.
+
 ## 0.3.3 — direct comparison key
 
 - Removed the sandbox gate from F8 so existing single-player saves can attempt the atmosphere A/B check.

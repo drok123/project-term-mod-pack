@@ -1,5 +1,9 @@
 # Milestones
 
+## M1 F8 runtime fix — 2026-09-25
+
+Build 42.20.4 logged five v0.3.3 F8 OFF/ON events, followed by 14 repeated Lua exceptions when the disabled climate update called the unavailable `next()` global. Version 0.3.4 replaces that call and adds a matching mock condition. Awaiting in-game rerun; sandbox page visibility and A/B appearance remain open.
+
 ## M1 sandbox page blocker — 2026-09-25
 
 The tester cannot find the PROJECT TERM sandbox page in the options they inspected. Whether these were new-world options or an existing save is still unknown. Version 0.3.3 removes the F8 key's dependency on that page so the existing save can run a direct A/B diagnostic; neither the key nor page is yet confirmed in-game.

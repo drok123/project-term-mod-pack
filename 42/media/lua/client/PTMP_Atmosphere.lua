@@ -134,7 +134,7 @@ local function update()
     if failed then return end
     local enabled, intensity, hazeScale, darknessScale, tintScale = preferences()
     if not Settings.enabled or not enabled or intensity <= 0 then
-        if next(states) or colorState then release() end
+        release() -- Kahlua does not expose Lua's next(); empty release is cheap.
         lastMinute = nil
         return
     end
