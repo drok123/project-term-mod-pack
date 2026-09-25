@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.5 — Build 42 sandbox translation format
+
+- Moved the custom sandbox page labels and tooltips from Lua-style `Sandbox_EN.txt` to `Translate/EN/Sandbox.json`, following the 42.15+ translation format.
+- Static validation checks the JSON syntax and page/option label coverage. Page visibility in 42.20.4 still requires a fresh in-game Custom Sandbox check.
+
 ## 0.3.4 — fix repeated F8-off runtime exception
 
 - Replaced an unsupported Lua `next()` call in the disabled atmosphere path. A 42.20.4 game log shows the F8 OFF/ON key events work but the minute update threw 14 exceptions while OFF.

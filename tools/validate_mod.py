@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Static gate only: catches folder nesting and metadata errors before an in-game test."""
 from pathlib import Path
+import json
+import re
 
 ROOT = Path(__file__).resolve().parents[1]
 MOD = ROOT
@@ -9,7 +11,7 @@ COMMON = MOD / 'common'
 CLIENT = MOD / '42' / 'media' / 'lua' / 'client' / 'PTMP_Boot.lua'
 ATMOSPHERE = MOD / '42' / 'media' / 'lua' / 'client' / 'PTMP_Atmosphere.lua'
 OPTIONS = MOD / '42' / 'media' / 'sandbox-options.txt'
-TRANSLATIONS = MOD / '42' / 'media' / 'lua' / 'shared' / 'translate' / 'en' / 'Sandbox_EN.txt'
+TRANSLATIONS = MOD / '42' / 'media' / 'lua' / 'shared' / 'Translate' / 'EN' / 'Sandbox.json'
 
 
 def validate() -> list[str]:
@@ -33,6 +35,19 @@ def validate() -> list[str]:
         errors.append('Root-level legacy mod files must not be used for this B42 package')
     if (MOD / 'mod').exists():
         errors.append('Nested mod/ directory would break direct GitHub Desktop installation')
+    if TRANSLATIONS.exists() and OPTIONS.exists():
+        try:
+            labels = json.loads(TRANSLATIONS.read_text(encoding='utf-8'))
+            if not isinstance(labels, dict):
+                errors.append('Sandbox.json must be a JSON object')
+            else:
+                pages = re.findall(r'\bpage\s*=\s*(\w+)', OPTIONS.read_text(encoding='utf-8'))
+                options = re.findall(r'\boption\s+(\w+)\.(\w+)', OPTIONS.read_text(encoding='utf-8'))
+                for key in {f'Sandbox_{page}' for page in pages} | {f'Sandbox_{group}_{name}' for group, name in options}:
+                    if not labels.get(key):
+                        errors.append(f'Missing sandbox translation: {key}')
+        except json.JSONDecodeError as exc:
+            errors.append(f'Invalid Sandbox.json: {exc}')
     return errors
 
 
