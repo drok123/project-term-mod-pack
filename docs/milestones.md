@@ -1,5 +1,9 @@
 # Milestones
 
+## M1 sandbox page blocker — 2026-09-25
+
+The tester cannot find the PROJECT TERM sandbox page in the options they inspected. Whether these were new-world options or an existing save is still unknown. Version 0.3.3 removes the F8 key's dependency on that page so the existing save can run a direct A/B diagnostic; neither the key nor page is yet confirmed in-game.
+
 ## M1 color candidate — 2026-09-25
 
 Added a separately guarded cold exterior/interior light tint with a sandbox slider. Static and mocked checks pass; in-game visual validation and exact patch acceptance remain pending.

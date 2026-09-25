@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.3 — direct comparison key
+
+- Removed the sandbox gate from F8 so existing single-player saves can attempt the atmosphere A/B check.
+- Removed the unverified F8 sandbox option. The tester reports that the PROJECT TERM sandbox page is absent; page registration remains an open in-game gate.
+
 ## 0.3.2 — cold light candidate
 
 - Added an adjustable blue-gray exterior light tint with a weaker interior tint. A missing color API cannot take down the existing haze pass.

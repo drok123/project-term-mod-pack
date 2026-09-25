@@ -201,11 +201,10 @@ Events.OnGameStart.Add(function()
 end)
 Events.EveryOneMinute.Add(update)
 
--- Optional on/off comparison at the same location and game time.
+-- Direct on/off comparison in single-player, including existing saves whose
+-- sandbox page was unavailable when the save was created.
 if Events.OnKeyPressed then
     Events.OnKeyPressed.Add(function(key)
-        if not SandboxVars or not SandboxVars.ProjectTerm or
-            SandboxVars.ProjectTerm.DebugToggle ~= true then return end
         if not Keyboard or key ~= Keyboard.KEY_F8 then return end
         if (isClient and isClient()) or (isServer and isServer()) then return end
         runtimeEnabled = not runtimeEnabled

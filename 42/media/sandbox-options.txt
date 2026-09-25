@@ -47,11 +47,3 @@ option ProjectTerm.ColdTint
     page = ProjectTerm,
     translation = ColdTint,
 }
-
-option ProjectTerm.DebugToggle
-{
-    type = boolean,
-    default = false,
-    page = ProjectTerm,
-    translation = DebugToggle,
-}

@@ -100,13 +100,15 @@ try:
         climate[2].natural = 0.75
         for i=1,90 do clock.age = clock.age + 1/60; callbacks.minute() end
         assert(climate[2].value > 0.7, 'natural heavy fog preserved')
-        SandboxVars.ProjectTerm.DebugToggle = true
+        SandboxVars.ProjectTerm = nil -- an existing save without this mod's sandbox page
         callbacks.key(Keyboard.KEY_F8)
         for _, channel in pairs(climate) do assert(not channel.enabled, 'F8 OFF releases overrides') end
         assert(not color.enabled, 'F8 OFF releases color')
         callbacks.key(Keyboard.KEY_F8)
         assert(climate[1].enabled, 'F8 ON restores climate pass')
         assert(color.enabled, 'F8 ON restores color')
+        SandboxVars.ProjectTerm = {AtmosphereEnabled=true, AtmosphereIntensity=1,
+            HazeDensity=1, Darkness=1}
         SandboxVars.ProjectTerm.AtmosphereEnabled = false
         clock.age = clock.age + 1/60
         callbacks.minute()
