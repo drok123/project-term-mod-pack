@@ -5,7 +5,7 @@ import ctypes.util
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / 'mod/ProjectTermModPack/42/media/lua/client/PTMP_Atmosphere.lua'
+SOURCE = ROOT / '42/media/lua/client/PTMP_Atmosphere.lua'
 library = ctypes.util.find_library('lua5.4')
 if not library:
     raise SystemExit('Lua 5.4 shared library unavailable; cannot run mock check')
