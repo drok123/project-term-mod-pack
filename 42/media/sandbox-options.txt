@@ -37,3 +37,11 @@ option ProjectTerm.Darkness
     page = ProjectTerm,
     translation = Darkness,
 }
+
+option ProjectTerm.DebugToggle
+{
+    type = boolean,
+    default = false,
+    page = ProjectTerm,
+    translation = DebugToggle,
+}
