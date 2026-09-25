@@ -8,4 +8,6 @@ Sandbox_EN = {
     Sandbox_ProjectTerm_HazeDensity_tooltip = "Controls the added thin haze, not naturally occurring fog. 0 adds none.",
     Sandbox_ProjectTerm_Darkness = "Darkness (0–2)",
     Sandbox_ProjectTerm_Darkness_tooltip = "Adjusts daylight and ambient climate dimming. 0 leaves vanilla brightness.",
+    Sandbox_ProjectTerm_DebugToggle = "F8 atmosphere comparison key",
+    Sandbox_ProjectTerm_DebugToggle_tooltip = "For single-player testing: F8 toggles this mod's climate overrides on or off and logs the new state.",
 }
