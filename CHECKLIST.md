@@ -4,12 +4,12 @@
 
 ## 0. Start here
 
-- [ ] Record the exact Build 42 version tested and whether the target is single-player only or multiplayer.
-- [ ] Add a Build 42 mod manifest and folder layout based on a known working B42 example; verify the mod appears in the in-game Mods menu before feature work.
+- [x] Record the exact Build 42 version tested and whether the target is single-player only or multiplayer. First single-player load: **42.20.4 b0bbce05d5**; multiplayer untested. See `docs/test-log.md`.
+- [ ] Add a Build 42 mod manifest and folder layout based on a known working B42 example; verify the mod appears in the in-game Mods menu before feature work. **Game detects and runs the mod on 42.20.4; explicit Mods-menu screenshot still pending.**
 - [x] Keep installable game files separate from source assets, documentation, and helper tools.
 - [x] Add a README with install path, dev workflow, supported game version, controls, known issues, and test instructions. (Exact tested patch version remains pending.)
 - [x] Add a changelog, `.gitignore`, and a short milestone log.
-- [ ] Capture `console.txt` for every test; stop on load errors or repeated log spam.
+- [ ] Capture `console.txt` for every test; stop on load errors or repeated log spam. First supplied log reviewed: mod startup has no identified error or repeated message; other game errors remain in that log.
 - [ ] Verify the APIs and asset formats against the actual installed B42 build before relying on them. A helicopter-event position, emissive material, dynamic light cone, or live world-model hook is a research question until proven in-game.
 
 Suggested repository layout (adjust the installable folder names to the tested B42 structure):
