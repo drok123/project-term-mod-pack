@@ -57,6 +57,8 @@ try:
         function getGameTime() return clock end
         function isClient() return false end
         function isServer() return false end
+        SandboxVars = {ProjectTerm = {AtmosphereEnabled=true, AtmosphereIntensity=1,
+            HazeDensity=1, Darkness=1}}
     ''')
     run(str(SOURCE).encode(), filename=True)
     run(b'''
@@ -74,6 +76,19 @@ try:
         climate[2].natural = 0.75
         for i=1,90 do clock.age = clock.age + 1/60; callbacks.minute() end
         assert(climate[2].value > 0.7, 'natural heavy fog preserved')
+        SandboxVars.ProjectTerm.AtmosphereEnabled = false
+        clock.age = clock.age + 1/60
+        callbacks.minute()
+        for _, channel in pairs(climate) do assert(not channel.enabled, 'disabled releases overrides') end
+        SandboxVars.ProjectTerm.AtmosphereEnabled = true
+        SandboxVars.ProjectTerm.HazeDensity = 0
+        SandboxVars.ProjectTerm.Darkness = 0
+        climate[2].natural = 0
+        clock.age = clock.age + 1/60
+        callbacks.minute()
+        for i=1,90 do clock.age = clock.age + 1/60; callbacks.minute() end
+        assert(climate[2].value < 0.01, 'zero added haze')
+        assert(math.abs(climate[3].value - climate[3].natural) < 0.01, 'zero darkness')
         isClient = function() return true end
         clock.age = clock.age + 1/60
         callbacks.minute()
