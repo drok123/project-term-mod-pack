@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1 — first game evidence and comparison candidate
+
+- Recorded first single-player load on Project Zomboid 42.20.4 b0bbce05d5.
+- Added an opt-in F8 climate toggle for same-location screenshots; Lua mock passes, in-game hotkey behavior pending.
+
 ## 0.3.0 — atmosphere controls candidate
 
 - Added a Build 42 custom sandbox page with atmosphere, haze, and darkness controls.
