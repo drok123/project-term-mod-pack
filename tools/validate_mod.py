@@ -8,11 +8,13 @@ INFO = MOD / '42' / 'mod.info'
 COMMON = MOD / 'common'
 CLIENT = MOD / '42' / 'media' / 'lua' / 'client' / 'PTMP_Boot.lua'
 ATMOSPHERE = MOD / '42' / 'media' / 'lua' / 'client' / 'PTMP_Atmosphere.lua'
+OPTIONS = MOD / '42' / 'media' / 'sandbox-options.txt'
+TRANSLATIONS = MOD / '42' / 'media' / 'lua' / 'shared' / 'translate' / 'en' / 'Sandbox_EN.txt'
 
 
 def validate() -> list[str]:
     errors = []
-    for required in (INFO, COMMON, CLIENT, ATMOSPHERE):
+    for required in (INFO, COMMON, CLIENT, ATMOSPHERE, OPTIONS, TRANSLATIONS):
         if not required.exists():
             errors.append(f'Missing: {required.relative_to(ROOT)}')
     if not INFO.exists():
