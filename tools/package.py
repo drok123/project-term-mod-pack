@@ -22,5 +22,7 @@ with ZipFile(output) as archive:
     assert 'project-term-mod-pack/42/mod.info' in names
     assert 'project-term-mod-pack/42/media/lua/client/PTMP_Boot.lua' in names
     assert 'project-term-mod-pack/42/media/lua/client/PTMP_Atmosphere.lua' in names
+    assert 'project-term-mod-pack/42/media/sandbox-options.txt' in names
+    assert 'project-term-mod-pack/42/media/lua/shared/translate/en/Sandbox_EN.txt' in names
     assert 'project-term-mod-pack/common/README.txt' in names
 print(f'Packaged {output} (ZIP and layout checks passed; in-game behavior untested)')
