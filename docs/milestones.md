@@ -11,3 +11,7 @@ Single-player gloomy climate pass added behind the same versioned mod. Static sy
 ## M1 controls candidate — 2026-09-25
 
 Added new-game sandbox controls for atmosphere, haze, and darkness using the Build 42 `sandbox-options.txt` structure. Mock Lua behavior passes. A received screenshot shows only a startup warning, so exact game patch, mod visibility, and option UI still need game evidence.
+
+## M1 first in-game load — 2026-09-25
+
+The user's `console.txt` and screenshots identify **42.20.4 b0bbce05d5**. Single-player enters the world with ProjectTermModPackB42 loaded; atmosphere values and both v0.3.0 startup messages appear once in the observed load. A night interior is visible. The explicit Mods-menu view, visual baseline, daytime/weather tests, save reload, and performance assessment remain open. Unrelated-looking game errors are present in the log, so no whole-log clean bill is claimed.
