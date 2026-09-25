@@ -7,11 +7,12 @@ MOD = ROOT / 'mod' / 'ProjectTermModPack'
 INFO = MOD / '42' / 'mod.info'
 COMMON = MOD / 'common'
 CLIENT = MOD / '42' / 'media' / 'lua' / 'client' / 'PTMP_Boot.lua'
+ATMOSPHERE = MOD / '42' / 'media' / 'lua' / 'client' / 'PTMP_Atmosphere.lua'
 
 
 def validate() -> list[str]:
     errors = []
-    for required in (INFO, COMMON, CLIENT):
+    for required in (INFO, COMMON, CLIENT, ATMOSPHERE):
         if not required.exists():
             errors.append(f'Missing: {required.relative_to(ROOT)}')
     if not INFO.exists():
