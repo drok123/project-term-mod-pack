@@ -21,9 +21,12 @@ project-term-mod-pack/
   CHANGELOG.md
   docs/                 # design, API findings, tests
   assets/source/        # Blender, source textures, source audio
-  mod/                  # installable B42 mod tree
+  42/                   # version-specific installable B42 files
+  common/               # shared installable files
   tools/                # exporters, validators, debug helpers
 ```
+
+**Direct-clone layout:** clone the repository as `Zomboid/mods/project-term-mod-pack`. The repository root is the mod folder, with `42/` and `common/` directly underneath it. Source art, docs, and tools stay in their own folders and are excluded from packaged ZIPs.
 
 **Fast path:** get a mod-menu entry, then a visible atmosphere change, then one prop, one red-eye threat, one visible aircraft, and one working energy weapon. Keep each experiment playable and logged.
 
