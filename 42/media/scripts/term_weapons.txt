@@ -1,0 +1,70 @@
+module ProjectTerm
+{
+    imports
+    {
+        Base
+    }
+
+    /*
+     * Milestone-1 firearm proof.
+     *
+     * This intentionally uses vanilla M16 ammunition/magazine behavior so the
+     * first in-game test isolates model/equip/fire/reload issues from custom
+     * plasma-ammo code. Replace with ProjectTerm energy cells after the model
+     * and basic firearm loop are proven in Build 42.
+     */
+    item ArcPulseRifle
+    {
+        DisplayName = Arc Pulse Rifle,
+        DisplayCategory = Weapon,
+        ItemType = base:weapon,
+        Icon = AssaultRifle,
+
+        Weight = 4.0,
+        TwoHandWeapon = true,
+        RequiresEquippedBothHands = true,
+        AttachmentType = Rifle,
+
+        StaticModel = Term_ArcPulseRifle,
+        WorldStaticModel = Term_ArcPulseRifle,
+        WeaponSprite = AssaultRifle,
+
+        IsAimedFirearm = true,
+        Ranged = true,
+        UseEndurance = false,
+
+        AmmoType = Base.556Bullets,
+        MagazineType = Base.556Clip,
+        MaxAmmo = 30,
+
+        FireMode = Single,
+        ProjectileCount = 1,
+        MinDamage = 2.2,
+        MaxDamage = 3.6,
+        MinRange = 0.61,
+        MaxRange = 12.0,
+        HitChance = 55,
+        AimingPerkHitChanceModifier = 4,
+        AimingPerkRangeModifier = 1.5,
+        AimingPerkCritModifier = 2,
+        AimingPerkMinAngleModifier = 0.01,
+
+        AimingTime = 18,
+        RecoilDelay = 12,
+        ReloadTime = 25,
+        SwingTime = 0.5,
+        MinimumSwingTime = 0.5,
+
+        CriticalChance = 20,
+        CritDmgMultiplier = 2.0,
+        PushBackMod = 0.35,
+        KnockdownMod = 1.0,
+
+        ConditionMax = 12,
+        ConditionLowerChanceOneIn = 80,
+
+        SoundRadius = 45,
+        SoundVolume = 40,
+        SwingSound = M16Shoot,
+    }
+}
