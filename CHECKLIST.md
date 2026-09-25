@@ -5,10 +5,10 @@
 ## 0. Start here
 
 - [ ] Record the exact Build 42 version tested and whether the target is single-player only or multiplayer.
-- [ ] Add a Build 42 mod manifest and folder layout based on a known working B42 example; verify the mod appears in the in-game Mods menu before feature work.
+- [x] Add a Build 42 mod manifest and folder layout based on a known working B42 example. **In-game Mods-menu verification still pending.**
 - [ ] Keep installable game files separate from source assets, documentation, and helper tools.
-- [ ] Add a README with install path, dev workflow, supported game version, controls, known issues, and test instructions.
-- [ ] Add a changelog, `.gitignore`, and a short milestone log.
+- [x] Add a README with install path, dev workflow, supported game version, controls, known issues, and test instructions.
+- [~] Add a changelog, `.gitignore`, and a short milestone log. **README + changelog added; `.gitignore`/milestone log still pending.**
 - [ ] Capture `console.txt` for every test; stop on load errors or repeated log spam.
 - [ ] Verify the APIs and asset formats against the actual installed B42 build before relying on them. A helicopter-event position, emissive material, dynamic light cone, or live world-model hook is a research question until proven in-game.
 
@@ -112,15 +112,15 @@ project-term-mod-pack/
 
 ## 9. Asset pipeline
 
-- [ ] Establish Blender export, game-ready model/animation formats, coordinates, scale, texture/material conventions, collision, and LOD from a real B42 loading test.
-- [ ] Separate `assets/source/` from installable exported assets; document naming and export commands.
+- [~] Establish Blender export, game-ready model/animation formats, coordinates, scale, texture/material conventions, collision, and LOD from a real B42 loading test. **Static-mesh prep/export pipeline exists; real B42 load/scale/attachment test still pending.**
+- [~] Separate `assets/source/` from installable exported assets; document naming and export commands. **Naming/export workflow documented; repo-side source/install split will be finalized when binaries are committed.**
 - [ ] Determine what eye emissive/glow and dynamic light methods the renderer actually supports.
 - [ ] Asset priority: simple red-eye prototype → flying placeholder → ground machine → polished craft → damage variants → resistance props → heavy machines.
 - [ ] Use original models, textures, names, logos, and sounds for a public release; do not include ripped film assets.
 
 ## 10. Implementation order and gates
 
-1. [ ] Repository skeleton, README, manifest, and in-game mod-menu proof.
+1. [~] Repository skeleton, README, and manifest are in place; **in-game mod-menu proof pending.**
 2. [ ] Error logging, debug toggles, and exact-version/API notes.
 3. [ ] Dark lighting and controllable haze; verify interiors and weather.
 4. [ ] Sandbox settings and restrained machine ambience.
@@ -128,7 +128,7 @@ project-term-mod-pack/
 6. [ ] Red-eye humanoid prototype, damage/death/cleanup, and audio.
 7. [ ] Investigate helicopter event; visible moving craft placeholder.
 8. [ ] Add craft silhouette, turbine, fog behavior, and measured searchlight.
-9. [ ] One plasma rifle, energy cell, projectile/VFX, and audio.
+9. [~] Arc Pulse Rifle firearm/model prototype added using temporary vanilla 5.56 mechanics; **custom energy cell, projectile/VFX, and audio pending.**
 10. [ ] Integrate, profile, test save/reload, and package the first playable build.
 
 **Every gate:** mod appears in the menu; new save loads without errors; check existing-save behavior; no runaway spawning or log spam; performance remains acceptable; document single-player/multiplayer support accurately.
