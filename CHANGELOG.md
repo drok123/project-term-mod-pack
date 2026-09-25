@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0 — atmosphere controls candidate
+
+- Added a Build 42 custom sandbox page with atmosphere, haze, and darkness controls.
+- Added mock checks for disabling and zeroing haze/darkness; in-game UI and visual checks are pending.
+
 ## 0.2.0 — atmosphere candidate
 
 - Added an experimental single-player gloomy climate layer with restrained haze and gradual transitions.
