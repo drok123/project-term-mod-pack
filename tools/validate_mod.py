@@ -3,7 +3,7 @@
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MOD = ROOT / 'mod' / 'ProjectTermModPack'
+MOD = ROOT
 INFO = MOD / '42' / 'mod.info'
 COMMON = MOD / 'common'
 CLIENT = MOD / '42' / 'media' / 'lua' / 'client' / 'PTMP_Boot.lua'
@@ -29,6 +29,8 @@ def validate() -> list[str]:
         errors.append('versionMin must target Build 42')
     if (MOD / 'mod.info').exists() or (MOD / 'media').exists():
         errors.append('Root-level legacy mod files must not be used for this B42 package')
+    if (MOD / 'mod').exists():
+        errors.append('Nested mod/ directory would break direct GitHub Desktop installation')
     return errors
 
 
