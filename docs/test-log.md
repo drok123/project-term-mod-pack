@@ -2,21 +2,26 @@
 
 ## Gate 1 — mod appears and loads
 
-- Status: **pending in-game verification**
-- Exact game version tested: **none yet**
-- Mode: single-player intended; multiplayer untested
+- Status: **partial game proof; explicit Mods-menu screenshot and repeat checks pending**
+- Exact game version observed: **42.20.4 b0bbce05d5**, as shown on the main menu and `console.txt` (`version=42.20.4 b0bbce05d5 demo=false`).
+- Mode: single-player loaded; multiplayer untested
 - Mods-menu screenshot: pending
-- Disposable new save loads: pending
+- Save loads into the world: **yes**. The supplied paused night screenshot shows the character inside a furnished house.
 - Same save reloads: pending
 - Existing save behavior: pending
-- `console.txt` retained and checked for errors/log spam: pending
+- `console.txt` reviewed: **yes**, one provided capture. It logs `loading ProjectTermModPackB42`, four atmosphere values at 1/true, `[PROJECT TERM] Atmosphere climate layer active`, and `[PROJECT TERM] v0.3.0 client Lua loaded` once per observed load.
+- Mod-specific load exception or repeated `[PROJECT TERM]` spam: **none seen** in the supplied capture. The log also contains `FluidContainerScript`, recipe, map metaID, and other game warnings/errors; their cause is unconfirmed and they should not be recorded as a clean whole-game log.
 - Tester/date/hardware and performance notes: pending
-- Screenshot received: startup photosensitivity screen only; no readable version or Mods-menu entry in that image.
+- Screenshots received: main menu with version and paused night gameplay; earlier startup warning image did not contain version information. No Mods-menu screenshot yet.
 
-Static packaging is not evidence that the game detected or ran this mod.
+The later main-menu and paused gameplay screenshots, together with `console.txt`, establish that the game detects and runs the mod on the build above. They do not prove appearance in the Mods menu, in-game visual effect size, weather transitions, or save reload behavior.
 
 ## Gate 2 — API findings and atmosphere
 
 Source candidate prepared; blocked by Gate 1 for in-game acceptance. Record API observations from the installed build and attach day/night, interior/exterior, rain, and weather-transition evidence. Test disabling and reloading for a clean vanilla look. Check nearby visibility, interior legibility, and `console.txt` for repeated errors. The implementation uses climate float IDs and overrides listed in the [current public API](https://projectzomboid.com/modding/zombie/iso/weather/ClimateManager.html) and [ClimateFloat methods](https://projectzomboid.com/modding/zombie/iso/weather/ClimateManager.ClimateFloat.html); their behavior in the installed Build 42 patch is unproven.
 
 Sandbox controls added in 0.3.0; verify the PROJECT TERM page appears on new custom sandbox setup, that 0 haze preserves naturally occurring fog, that 0 darkness preserves vanilla lighting, and that disabling atmosphere releases overrides.
+
+Version 0.3.1 adds an opt-in F8 comparison key. The Lua mock confirms releasing and reapplying owned climate overrides, but key delivery and the resulting visual transition are untested in game.
+
+First observed runtime data: `AtmosphereEnabled true`, `AtmosphereIntensity 1.0`, `HazeDensity 1.0`, `Darkness 1.0` in `console.txt`. This proves option values reached the game, but the options page itself has not been screenshotted. A paused night screenshot shows a lit interior and dark exterior; no baseline screenshot was provided, so the mod's visual contribution is unmeasured.
