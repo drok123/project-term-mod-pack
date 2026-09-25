@@ -1,0 +1,39 @@
+VERSION = 1,
+
+option ProjectTerm.AtmosphereEnabled
+{
+    type = boolean,
+    default = true,
+    page = ProjectTerm,
+    translation = AtmosphereEnabled,
+}
+
+option ProjectTerm.AtmosphereIntensity
+{
+    type = double,
+    default = 1.0,
+    min = 0.0,
+    max = 2.0,
+    page = ProjectTerm,
+    translation = AtmosphereIntensity,
+}
+
+option ProjectTerm.HazeDensity
+{
+    type = double,
+    default = 1.0,
+    min = 0.0,
+    max = 2.0,
+    page = ProjectTerm,
+    translation = HazeDensity,
+}
+
+option ProjectTerm.Darkness
+{
+    type = double,
+    default = 1.0,
+    min = 0.0,
+    max = 2.0,
+    page = ProjectTerm,
+    translation = Darkness,
+}
