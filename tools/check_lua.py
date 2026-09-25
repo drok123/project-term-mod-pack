@@ -53,7 +53,24 @@ try:
             function c:setEnableOverride(value) self.enabled = value end
             climate[i] = c
         end
-        manager = { getClimateFloat = function(_, i) return climate[i] end }
+        local function rgb(r,g,b,a)
+            return {getR=function() return r end, getG=function() return g end,
+                getB=function() return b end, getAlphaFloat=function() return a end}
+        end
+        local naturalColor = {getExterior=function() return rgb(.8,.7,.65,.9) end,
+            getInterior=function() return rgb(.5,.4,.3,.8) end}
+        color = {enabled=false, natural=naturalColor}
+        function color:isEnableOverride() return self.enabled end
+        function color:getInternalValue() return self.natural end
+        function color:setOverride(value) self.value=value end
+        function color:setEnableOverride(value) self.enabled=value end
+        ClimateManager.COLOR_GLOBAL_LIGHT = 7
+        ClimateColorInfo = {new=function()
+            return {setExterior=function(self,r,g,b,a) self.exterior={r,g,b,a} end,
+                setInterior=function(self,r,g,b,a) self.interior={r,g,b,a} end}
+        end}
+        manager = { getClimateFloat = function(_, i) return climate[i] end,
+            getClimateColor = function(_, i) if i==7 then return color end end }
         clock = { age = 100, getWorldAgeHours = function(self) return self.age end }
         function getClimateManager() return manager end
         function getGameTime() return clock end
@@ -75,31 +92,53 @@ try:
         assert(climate[3].value < climate[3].natural, 'dim daylight')
         assert(climate[4].value < climate[4].natural, 'dim ambient')
         assert(climate[6].value > 0.16, 'desaturation')
+        assert(color.enabled, 'color channel enabled')
+        assert(color.value.exterior[1] < .8 and color.value.exterior[3] == .65,
+            'exterior cools without changing blue')
+        assert(color.value.interior[1] > .48 and color.value.interior[4] == .8,
+            'interior tint weaker and natural alpha preserved')
         climate[2].natural = 0.75
         for i=1,90 do clock.age = clock.age + 1/60; callbacks.minute() end
         assert(climate[2].value > 0.7, 'natural heavy fog preserved')
         SandboxVars.ProjectTerm.DebugToggle = true
         callbacks.key(Keyboard.KEY_F8)
         for _, channel in pairs(climate) do assert(not channel.enabled, 'F8 OFF releases overrides') end
+        assert(not color.enabled, 'F8 OFF releases color')
         callbacks.key(Keyboard.KEY_F8)
         assert(climate[1].enabled, 'F8 ON restores climate pass')
+        assert(color.enabled, 'F8 ON restores color')
         SandboxVars.ProjectTerm.AtmosphereEnabled = false
         clock.age = clock.age + 1/60
         callbacks.minute()
         for _, channel in pairs(climate) do assert(not channel.enabled, 'disabled releases overrides') end
+        assert(not color.enabled, 'disabled releases color')
         SandboxVars.ProjectTerm.AtmosphereEnabled = true
         SandboxVars.ProjectTerm.HazeDensity = 0
         SandboxVars.ProjectTerm.Darkness = 0
+        SandboxVars.ProjectTerm.ColdTint = 0
         climate[2].natural = 0
         clock.age = clock.age + 1/60
         callbacks.minute()
         for i=1,90 do clock.age = clock.age + 1/60; callbacks.minute() end
         assert(climate[2].value < 0.01, 'zero added haze')
         assert(math.abs(climate[3].value - climate[3].natural) < 0.01, 'zero darkness')
+        assert(not color.enabled, 'zero cold tint releases color')
+        SandboxVars.ProjectTerm.ColdTint = 1
+        color.enabled = true -- simulate a second mod already owning the color override
+        clock.age = clock.age + 1/60
+        callbacks.minute()
+        assert(color.enabled, 'other mod color ownership respected')
         isClient = function() return true end
         clock.age = clock.age + 1/60
         callbacks.minute()
         for _, channel in pairs(climate) do assert(not channel.enabled, 'release in multiplayer') end
+        assert(color.enabled, 'other mod color remains enabled')
+        isClient = function() return false end
+        color.enabled = false
+        ClimateColorInfo = nil -- simulate a B42 patch without exposed color constructor
+        callbacks.start()
+        assert(climate[1].enabled, 'color API failure does not disable haze pass')
+        assert(not color.enabled, 'color API failure does not hold a color override')
     ''')
     print('Lua syntax and mocked climate behavior: OK (game behavior untested)')
 finally:

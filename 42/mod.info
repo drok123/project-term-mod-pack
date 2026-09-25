@@ -1,6 +1,6 @@
 name=PROJECT TERM - Future War
 id=ProjectTermModPackB42
 author=Project Term
-modversion=0.3.1
-description=Original future-war horror project. Experimental single-player gloomy climate with sandbox controls; in-game verification pending.
+modversion=0.3.2
+description=Original future-war horror project. Experimental single-player gloomy climate and cold tint with sandbox controls; visual verification pending.
 versionMin=42.0.0

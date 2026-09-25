@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.2 — cold light candidate
+
+- Added an adjustable blue-gray exterior light tint with a weaker interior tint. A missing color API cannot take down the existing haze pass.
+- Extended the Lua mock to check color override ownership, F8 release, zero tint, and color API failure. The tint remains untested in the game.
+
 ## 0.3.1 — first game evidence and comparison candidate
 
 - Recorded first single-player load on Project Zomboid 42.20.4 b0bbce05d5.

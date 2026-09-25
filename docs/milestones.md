@@ -1,5 +1,9 @@
 # Milestones
 
+## M1 color candidate — 2026-09-25
+
+Added a separately guarded cold exterior/interior light tint with a sandbox slider. Static and mocked checks pass; in-game visual validation and exact patch acceptance remain pending.
+
 ## M0 — 2026-09-25
 
 Build 42 foundation candidate prepared. Static layout and ZIP checks pass. Awaiting game installation, Mods-menu screenshot, exact game version, and `console.txt` to close Gate 1.

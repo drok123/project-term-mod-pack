@@ -22,10 +22,13 @@ local function preferences()
         return math.max(0, math.min(2, value))
     end
     return vars.AtmosphereEnabled ~= false and runtimeEnabled,
-        scale('AtmosphereIntensity'), scale('HazeDensity'), scale('Darkness')
+        scale('AtmosphereIntensity'), scale('HazeDensity'), scale('Darkness'),
+        scale('ColdTint')
 end
 
 local states = {}
+local colorState = nil
+local colorFailed = false
 local lastMinute = nil
 local failed = false
 local logged = false
@@ -41,6 +44,62 @@ local function release()
         end
     end
     states = {}
+    if colorState and colorState.owned then
+        pcall(function() colorState.channel:setEnableOverride(false) end)
+    end
+    colorState = nil
+end
+
+local function tintColor(color, amount, interior)
+    -- Work from the natural light color every minute, so dawn, dusk, rain,
+    -- and artificial interior light are not permanently colored or flattened.
+    local red = interior and 0.025 or 0.09
+    local green = interior and 0.008 or 0.035
+    return math.max(0, color:getR() * (1 - red * amount)),
+        math.max(0, color:getG() * (1 - green * amount)),
+        color:getB(), color:getAlphaFloat()
+end
+
+local function applyColdTint(manager, id, amount)
+    if amount <= 0 then
+        if colorState and colorState.owned then
+            colorState.channel:setEnableOverride(false)
+        end
+        colorState = nil
+        return
+    end
+    if colorFailed then return end
+    local ok, err = pcall(function()
+        if not colorState then
+            if not id or not ClimateColorInfo then error('Climate color API unavailable') end
+            local channel = manager:getClimateColor(id)
+            if not channel then error('Global light color channel unavailable') end
+            colorState = {
+                channel = channel,
+                owned = not channel:isEnableOverride(),
+                value = ClimateColorInfo.new(),
+            }
+            if not colorState.owned then
+                print('[PROJECT TERM] Global light color already overridden; leaving it alone.')
+            end
+        end
+        if not colorState.owned then return end
+        local natural = colorState.channel:getInternalValue()
+        local er, eg, eb, ea = tintColor(natural:getExterior(), amount, false)
+        local ir, ig, ib, ia = tintColor(natural:getInterior(), amount, true)
+        colorState.value:setExterior(er, eg, eb, ea)
+        colorState.value:setInterior(ir, ig, ib, ia)
+        colorState.channel:setOverride(colorState.value, 1.0)
+        colorState.channel:setEnableOverride(true)
+    end)
+    if not ok then
+        if colorState and colorState.owned then
+            pcall(function() colorState.channel:setEnableOverride(false) end)
+        end
+        colorState = nil
+        colorFailed = true
+        print('[PROJECT TERM] Cold tint disabled after color API error: ' .. tostring(err))
+    end
 end
 
 local function getState(manager, name, id)
@@ -73,9 +132,9 @@ end
 
 local function update()
     if failed then return end
-    local enabled, intensity, hazeScale, darknessScale = preferences()
+    local enabled, intensity, hazeScale, darknessScale, tintScale = preferences()
     if not Settings.enabled or not enabled or intensity <= 0 then
-        if next(states) then release() end
+        if next(states) or colorState then release() end
         lastMinute = nil
         return
     end
@@ -119,6 +178,8 @@ local function update()
             globalLight * (1 - (1 - Settings.globalLightFactor) * intensity * darknessScale), elapsed)
         apply(manager, 'desaturation', CM.FLOAT_DESATURATION,
             desaturation + (math.max(desaturation, Settings.desaturationFloor) - desaturation) * intensity, elapsed)
+        applyColdTint(manager, CM.COLOR_GLOBAL_LIGHT,
+            clamp(intensity * tintScale, 0, 2))
 
         if not logged then
             print('[PROJECT TERM] Atmosphere climate layer active (single-player experimental).')
@@ -134,7 +195,7 @@ end
 
 Events.OnGameStart.Add(function()
     release()
-    lastMinute, failed, logged = nil, false, false
+    lastMinute, failed, logged, colorFailed = nil, false, false, false
     runtimeEnabled = true
     update()
 end)

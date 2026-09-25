@@ -38,6 +38,16 @@ option ProjectTerm.Darkness
     translation = Darkness,
 }
 
+option ProjectTerm.ColdTint
+{
+    type = double,
+    default = 1.0,
+    min = 0.0,
+    max = 2.0,
+    page = ProjectTerm,
+    translation = ColdTint,
+}
+
 option ProjectTerm.DebugToggle
 {
     type = boolean,
