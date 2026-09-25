@@ -13,6 +13,7 @@
 - Mod-specific load exception or repeated `[PROJECT TERM]` spam: **none seen** in the supplied capture. The log also contains `FluidContainerScript`, recipe, map metaID, and other game warnings/errors; their cause is unconfirmed and they should not be recorded as a clean whole-game log.
 - Tester/date/hardware and performance notes: pending
 - Screenshots received: main menu with version and paused night gameplay; earlier startup warning image did not contain version information. No Mods-menu screenshot yet.
+- Additional screenshot received: paused daylight outdoor field on 42.20.4 b0bbce05d5, with a character near a tree, shrubs, grass, and a clear nearby path. The FPS overlay reads 75 while paused, so it is not a gameplay performance measurement. No same-location mod-off baseline, v0.3.2 startup log, or visible sandbox settings accompany this frame. The color tint and strength of the climate effect cannot be attributed from this image alone; the environment still appears mostly green and intact.
 
 The later main-menu and paused gameplay screenshots, together with `console.txt`, establish that the game detects and runs the mod on the build above. They do not prove appearance in the Mods menu, in-game visual effect size, weather transitions, or save reload behavior.
 
