@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.6 — match sandbox option translation keys
+
+- An in-game 42.20.4 screenshot proves the PROJECT TERM sandbox page and all five controls appear on 0.3.5, but each option displays a raw `Sandbox_...` key. The page title translates.
+- Match the JSON option keys to the exact raw keys requested by the game. The validator now checks each declared `translation` value rather than deriving keys from the option namespace. In-game label verification remains pending.
+
 ## 0.3.5 — Build 42 sandbox translation format
 
 - Moved the custom sandbox page labels and tooltips from Lua-style `Sandbox_EN.txt` to `Translate/EN/Sandbox.json`, following the 42.15+ translation format.

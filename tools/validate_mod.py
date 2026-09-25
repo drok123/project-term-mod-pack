@@ -42,8 +42,8 @@ def validate() -> list[str]:
                 errors.append('Sandbox.json must be a JSON object')
             else:
                 pages = re.findall(r'\bpage\s*=\s*(\w+)', OPTIONS.read_text(encoding='utf-8'))
-                options = re.findall(r'\boption\s+(\w+)\.(\w+)', OPTIONS.read_text(encoding='utf-8'))
-                for key in {f'Sandbox_{page}' for page in pages} | {f'Sandbox_{group}_{name}' for group, name in options}:
+                translations = re.findall(r'\btranslation\s*=\s*(\w+)', OPTIONS.read_text(encoding='utf-8'))
+                for key in {f'Sandbox_{page}' for page in pages} | {f'Sandbox_{name}' for name in translations}:
                     if not labels.get(key):
                         errors.append(f'Missing sandbox translation: {key}')
         except json.JSONDecodeError as exc:

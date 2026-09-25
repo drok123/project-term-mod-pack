@@ -48,7 +48,7 @@ project-term-mod-pack/
 - [ ] Add lightweight ash or soot detail only where the engine can support it without excessive per-frame work.
 - [ ] Add rare distant red illumination and brief machine-related light cues where technically feasible.
 - [ ] Add restrained positional ambience: wind over ruins, distant turbines, servo/metal movement, electrical hum, far-off gunfire or plasma, and explosions.
-- [ ] Expose atmospheric intensity, haze density, darkness, ash, and audio frequency in sandbox settings.
+- [ ] Expose atmospheric intensity, haze density, darkness, ash, and audio frequency in sandbox settings. **The 0.3.5 PROJECT TERM page and five atmosphere controls are visible in 42.20.4; ash and audio controls, readable option labels, and effects remain pending.**
 - [ ] Add debug commands to force fog, night, ambience, and atmosphere on/off.
 
 **Visual acceptance:** the world remains recognizable up close; distant streets and rooftops recede into dirty darkness. Nights feel dangerous and interiors remain usable.
