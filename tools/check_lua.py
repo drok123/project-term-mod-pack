@@ -33,8 +33,10 @@ try:
         callbacks = {}
         Events = {
             OnGameStart = { Add = function(f) callbacks.start = f end },
-            EveryOneMinute = { Add = function(f) callbacks.minute = f end }
+            EveryOneMinute = { Add = function(f) callbacks.minute = f end },
+            OnKeyPressed = { Add = function(f) callbacks.key = f end }
         }
+        Keyboard = { KEY_F8 = 66 }
         ClimateManager = {
             FLOAT_CLOUD_INTENSITY = 1, FLOAT_FOG_INTENSITY = 2,
             FLOAT_DAYLIGHT_STRENGTH = 3, FLOAT_AMBIENT = 4,
@@ -76,6 +78,11 @@ try:
         climate[2].natural = 0.75
         for i=1,90 do clock.age = clock.age + 1/60; callbacks.minute() end
         assert(climate[2].value > 0.7, 'natural heavy fog preserved')
+        SandboxVars.ProjectTerm.DebugToggle = true
+        callbacks.key(Keyboard.KEY_F8)
+        for _, channel in pairs(climate) do assert(not channel.enabled, 'F8 OFF releases overrides') end
+        callbacks.key(Keyboard.KEY_F8)
+        assert(climate[1].enabled, 'F8 ON restores climate pass')
         SandboxVars.ProjectTerm.AtmosphereEnabled = false
         clock.age = clock.age + 1/60
         callbacks.minute()
