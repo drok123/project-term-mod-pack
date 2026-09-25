@@ -1,6 +1,6 @@
 # PROJECT TERM — future-war horror for Project Zomboid
 
-Early Build 42 single-player prototype. It contains a **mod-menu/load diagnostic and an experimental atmosphere pass**. Version 0.3.3 loaded on **42.20.4 b0bbce05d5** and F8 key presses registered, but the disabled update repeatedly threw a Lua exception. Version 0.3.4 fixes that call and **needs another game check**. Daylight appearance, weather behavior, mod disable/reload, and full compatibility are unverified. It does not yet contain machines, aircraft, props, or weapons.
+Early Build 42 single-player prototype. It contains a **mod-menu/load diagnostic and an experimental atmosphere pass**. Version 0.3.4 loaded on **42.20.4 b0bbce05d5**; eight F8 presses toggled the atmosphere with no mod-specific exception in the supplied log. Daylight appearance, weather behavior, mod disable/reload, and full compatibility are unverified. It does not yet contain machines, aircraft, props, or weapons.
 
 ## Install and test the first gate
 

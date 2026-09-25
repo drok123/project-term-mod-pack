@@ -1,5 +1,9 @@
 # Milestones
 
+## M1 F8 runtime proven — 2026-09-25
+
+A new 42.20.4 `console.txt` logs v0.3.4 and eight F8 state changes without mod-specific exceptions or repeated logs. The prior unsupported `next()` failure does not recur. Visual appearance, weather and interior checks, sandbox page, and reload remain open.
+
 ## M1 F8 runtime fix — 2026-09-25
 
 Build 42.20.4 logged five v0.3.3 F8 OFF/ON events, followed by 14 repeated Lua exceptions when the disabled climate update called the unavailable `next()` global. Version 0.3.4 replaces that call and adds a matching mock condition. Awaiting in-game rerun; sandbox page visibility and A/B appearance remain open.
