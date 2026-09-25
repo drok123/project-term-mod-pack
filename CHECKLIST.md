@@ -6,9 +6,9 @@
 
 - [ ] Record the exact Build 42 version tested and whether the target is single-player only or multiplayer.
 - [ ] Add a Build 42 mod manifest and folder layout based on a known working B42 example; verify the mod appears in the in-game Mods menu before feature work.
-- [ ] Keep installable game files separate from source assets, documentation, and helper tools.
-- [ ] Add a README with install path, dev workflow, supported game version, controls, known issues, and test instructions.
-- [ ] Add a changelog, `.gitignore`, and a short milestone log.
+- [x] Keep installable game files separate from source assets, documentation, and helper tools.
+- [x] Add a README with install path, dev workflow, supported game version, controls, known issues, and test instructions. (Exact tested patch version remains pending.)
+- [x] Add a changelog, `.gitignore`, and a short milestone log.
 - [ ] Capture `console.txt` for every test; stop on load errors or repeated log spam.
 - [ ] Verify the APIs and asset formats against the actual installed B42 build before relying on them. A helicopter-event position, emissive material, dynamic light cone, or live world-model hook is a research question until proven in-game.
 
