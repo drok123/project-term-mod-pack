@@ -13,6 +13,17 @@ local Settings = {
     transitionMinutes = 18,
 }
 
+local function preferences()
+    local vars = SandboxVars and SandboxVars.ProjectTerm or {}
+    local function scale(name)
+        local value = tonumber(vars[name])
+        if value == nil then return 1 end
+        return math.max(0, math.min(2, value))
+    end
+    return vars.AtmosphereEnabled ~= false,
+        scale('AtmosphereIntensity'), scale('HazeDensity'), scale('Darkness')
+end
+
 local states = {}
 local lastMinute = nil
 local failed = false
@@ -60,7 +71,13 @@ local function apply(manager, name, id, target, elapsed)
 end
 
 local function update()
-    if failed or not Settings.enabled then return end
+    if failed then return end
+    local enabled, intensity, hazeScale, darknessScale = preferences()
+    if not Settings.enabled or not enabled or intensity <= 0 then
+        if next(states) then release() end
+        lastMinute = nil
+        return
+    end
     if (isClient and isClient()) or (isServer and isServer()) then
         release() -- the server owns climate in multiplayer
         return
@@ -87,19 +104,20 @@ local function update()
         -- The pulse adds slight distance variation; actual vanilla fog remains.
         local pulse = (math.sin(minute / 150) + 1) * 0.5 * Settings.hazePulse
         local addedHaze = math.min(Settings.extraHazeMaximum,
-            Settings.hazeFloor + pulse + math.max(0, cloud - 0.5) * 0.06)
+            (Settings.hazeFloor + pulse + math.max(0, cloud - 0.5) * 0.06)
+            * intensity * hazeScale)
         apply(manager, 'cloud', CM.FLOAT_CLOUD_INTENSITY,
-            math.max(cloud, Settings.cloudFloor), elapsed)
+            cloud + (math.max(cloud, Settings.cloudFloor) - cloud) * intensity, elapsed)
         apply(manager, 'fog', CM.FLOAT_FOG_INTENSITY,
             math.max(fog, addedHaze), elapsed)
         apply(manager, 'daylight', CM.FLOAT_DAYLIGHT_STRENGTH,
-            daylight * Settings.daylightFactor, elapsed)
+            daylight * (1 - (1 - Settings.daylightFactor) * intensity * darknessScale), elapsed)
         apply(manager, 'ambient', CM.FLOAT_AMBIENT,
-            ambient * Settings.ambientFactor, elapsed)
+            ambient * (1 - (1 - Settings.ambientFactor) * intensity * darknessScale), elapsed)
         apply(manager, 'globalLight', CM.FLOAT_GLOBAL_LIGHT_INTENSITY,
-            globalLight * Settings.globalLightFactor, elapsed)
+            globalLight * (1 - (1 - Settings.globalLightFactor) * intensity * darknessScale), elapsed)
         apply(manager, 'desaturation', CM.FLOAT_DESATURATION,
-            math.max(desaturation, Settings.desaturationFloor), elapsed)
+            desaturation + (math.max(desaturation, Settings.desaturationFloor) - desaturation) * intensity, elapsed)
 
         if not logged then
             print('[PROJECT TERM] Atmosphere climate layer active (single-player experimental).')
