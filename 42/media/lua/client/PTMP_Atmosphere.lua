@@ -12,6 +12,7 @@ local Settings = {
     desaturationFloor = 0.17,
     transitionMinutes = 18,
 }
+local runtimeEnabled = true
 
 local function preferences()
     local vars = SandboxVars and SandboxVars.ProjectTerm or {}
@@ -20,7 +21,7 @@ local function preferences()
         if value == nil then return 1 end
         return math.max(0, math.min(2, value))
     end
-    return vars.AtmosphereEnabled ~= false,
+    return vars.AtmosphereEnabled ~= false and runtimeEnabled,
         scale('AtmosphereIntensity'), scale('HazeDensity'), scale('Darkness')
 end
 
@@ -134,6 +135,22 @@ end
 Events.OnGameStart.Add(function()
     release()
     lastMinute, failed, logged = nil, false, false
+    runtimeEnabled = true
     update()
 end)
 Events.EveryOneMinute.Add(update)
+
+-- Optional on/off comparison at the same location and game time.
+if Events.OnKeyPressed then
+    Events.OnKeyPressed.Add(function(key)
+        if not SandboxVars or not SandboxVars.ProjectTerm or
+            SandboxVars.ProjectTerm.DebugToggle ~= true then return end
+        if not Keyboard or key ~= Keyboard.KEY_F8 then return end
+        if (isClient and isClient()) or (isServer and isServer()) then return end
+        runtimeEnabled = not runtimeEnabled
+        if not runtimeEnabled then release() end
+        lastMinute = nil
+        print('[PROJECT TERM] Atmosphere comparison: ' .. (runtimeEnabled and 'ON' or 'OFF'))
+        if runtimeEnabled then update() end
+    end)
+end
