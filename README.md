@@ -12,9 +12,13 @@ Implemented/staged:
 - 12 prepared Meshy-derived machine/weapon assets
 - PZ model declarations
 - Arc Pulse Rifle gameplay prototype with custom energy ammunition
+- tagged vanilla-zombie red-eye hunter prototype with capped fallback lights
+- Project Term hunter sandbox options and a debug spawn helper
 - documented Blender/FBX asset pipeline
 
 Not yet proven in-game:
+- hunter spawn, durability, pooling cleanup, and fallback optics on B42.20.x
+- emissive twin-eye materials and a distinct hunter outfit
 - final model scale/orientation/hand attachments
 - final plasma projectile/tracer VFX and custom audio
 - gunship flyover behavior
@@ -42,6 +46,12 @@ Enable **Project Term Mod Pack** in the Mods menu and activate it for the save b
 8. Check `console.txt` for `[ProjectTerm]` messages and any script/model errors.
 
 The rifle now uses the custom Build 42 ammo registry id `projectterm:arc_charge`. The sound set is still using vanilla M16 placeholders until the custom plasma audio pass.
+
+## Red-eye hunter test
+
+See `docs/RED_EYE_HUNTER.md` for the B42.20.x single-player test procedure,
+sandbox settings, debug helper, and known limitations. In a `-debug` test world,
+`ProjectTerm.SpawnHunter()` forces one tagged vanilla zombie near the player.
 
 ## Asset pipeline
 
