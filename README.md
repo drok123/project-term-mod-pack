@@ -11,13 +11,12 @@ Implemented/staged:
 - B42 `mod.info`
 - 12 prepared Meshy-derived machine/weapon assets
 - PZ model declarations
-- Arc Pulse Rifle gameplay prototype
+- Arc Pulse Rifle gameplay prototype with custom energy ammunition
 - documented Blender/FBX asset pipeline
 
 Not yet proven in-game:
 - final model scale/orientation/hand attachments
-- plasma VFX/audio
-- custom energy-cell ammunition
+- final plasma projectile/tracer VFX and custom audio
 - gunship flyover behavior
 - humanoid machine rigging/AI
 
@@ -37,11 +36,12 @@ Enable **Project Term Mod Pack** in the Mods menu and activate it for the save b
 2. Enable the mod.
 3. Start a fresh debug/test save.
 4. Use debug item tools to add `ProjectTerm.ArcPulseRifle`.
-5. Also add vanilla `Base.556Clip` magazines and `Base.556Bullets` for this temporary mechanics pass.
-6. Equip/fire/reload/drop the rifle.
-7. Check `console.txt` for script/model errors.
+5. Add `ProjectTerm.ArcCell` and `ProjectTerm.ArcCharge`.
+6. Load Arc Charges into the Arc Energy Cell, insert the cell, then equip/fire/reload/drop the rifle.
+7. Confirm the brief violet muzzle-light flash appears when firing.
+8. Check `console.txt` for `[ProjectTerm]` messages and any script/model errors.
 
-The rifle intentionally uses vanilla 5.56 mechanics at this stage. Once the custom model is confirmed in hand and on the ground, it will move to custom energy cells and plasma effects.
+The rifle now uses the custom Build 42 ammo registry id `projectterm:arc_charge`. The sound set is still using vanilla M16 placeholders until the custom plasma audio pass.
 
 ## Asset pipeline
 
