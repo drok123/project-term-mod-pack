@@ -88,7 +88,8 @@ try:
             clock.age = clock.age + 1/60
             callbacks.minute()
         end
-        assert(climate[1].enabled and climate[1].value > 0.5, 'cloud floor')
+        assert(climate[1].enabled and climate[1].value > 0.45
+            and climate[1].value < 0.55, 'restrained daytime cloud target')
         assert(climate[2].enabled and climate[2].value > 0.09 and climate[2].value < 0.25, 'low haze')
         assert(climate[3].value < climate[3].natural, 'dim daylight')
         assert(climate[4].value < climate[4].natural, 'dim ambient')
@@ -101,9 +102,12 @@ try:
         assert(color.value.interior[1] > .48 and color.value.interior[4] == .8,
             'daytime interior tint is weak and preserves natural alpha')
         local dayExteriorRed = color.value.exterior[1]
+        local dayCloud = climate[1].value
         climate[3].natural = 0
         clock.age = clock.age + 1/60
         callbacks.minute()
+        assert(climate[1].value > dayCloud,
+            'night cloud target is stronger than day')
         assert(color.value.exterior[1] < dayExteriorRed,
             'night exterior grade is stronger than day')
         assert(color.value.exterior[3] > color.value.exterior[2],
