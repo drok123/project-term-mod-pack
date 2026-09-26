@@ -1,0 +1,16 @@
+{
+    "Sandbox_ProjectTerm": "Project Term",
+    "Sandbox_ProjectTerm_HuntersEnabled": "Enable Red-Eye Hunters",
+    "Sandbox_ProjectTerm_HuntersEnabled_tooltip": "Allows a small percentage of newly loaded vanilla zombies to become machine hunters.",
+    "Sandbox_ProjectTerm_HunterChance": "Hunter Chance (%)",
+    "Sandbox_ProjectTerm_HunterChance_tooltip": "Chance that each zombie becomes a hunter when it is created or reused. Default: 3%.",
+    "Sandbox_ProjectTerm_HunterDifficulty": "Hunter Difficulty",
+    "Sandbox_ProjectTerm_HunterDifficulty_tooltip": "Controls the extra durability applied to hunters.",
+    "Sandbox_ProjectTerm_HunterDifficulty_option1": "Easy (+15% durability)",
+    "Sandbox_ProjectTerm_HunterDifficulty_option2": "Normal (+30% durability)",
+    "Sandbox_ProjectTerm_HunterDifficulty_option3": "Brutal (+50% durability)",
+    "Sandbox_ProjectTerm_RedOpticsEnabled": "Enable Red Optics",
+    "Sandbox_ProjectTerm_RedOpticsEnabled_tooltip": "Adds a tiny client-side red light to nearby living hunters.",
+    "Sandbox_ProjectTerm_MaxActiveHunterLights": "Maximum Active Hunter Lights",
+    "Sandbox_ProjectTerm_MaxActiveHunterLights_tooltip": "Caps simultaneous optic lights. The nearest hunters receive lights first; zero disables all hunter lights."
+}

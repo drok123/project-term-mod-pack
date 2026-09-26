@@ -1,0 +1,46 @@
+VERSION = 1,
+
+option ProjectTerm.HuntersEnabled
+{
+    type = boolean,
+    default = true,
+    page = ProjectTerm,
+    translation = ProjectTerm_HuntersEnabled,
+}
+
+option ProjectTerm.HunterChance
+{
+    type = double,
+    min = 0.0,
+    max = 100.0,
+    default = 3.0,
+    page = ProjectTerm,
+    translation = ProjectTerm_HunterChance,
+}
+
+option ProjectTerm.HunterDifficulty
+{
+    type = enum,
+    numValues = 3,
+    default = 2,
+    page = ProjectTerm,
+    translation = ProjectTerm_HunterDifficulty,
+}
+
+option ProjectTerm.RedOpticsEnabled
+{
+    type = boolean,
+    default = true,
+    page = ProjectTerm,
+    translation = ProjectTerm_RedOpticsEnabled,
+}
+
+option ProjectTerm.MaxActiveHunterLights
+{
+    type = integer,
+    min = 0,
+    max = 32,
+    default = 10,
+    page = ProjectTerm,
+    translation = ProjectTerm_MaxActiveHunterLights,
+}

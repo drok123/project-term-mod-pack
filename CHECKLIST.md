@@ -62,13 +62,13 @@ project-term-mod-pack/
 
 ## 4. Red-eye ground hunters
 
-- [ ] Prototype one threat using an existing humanoid system; verify spawn, movement, damage, death, save/load, and cleanup.
-- [ ] Give it small red optics, distinct metal/servo audio, extra durability, restrained stagger, and a recognizable silhouette.
-- [ ] Verify whether actual emissive eye textures work in the tested B42 renderer; otherwise prototype a cheap visual fallback.
+- [~] Prototype one threat using an existing humanoid system; verify spawn, movement, damage, death, save/load, and cleanup. **Tagged vanilla-zombie implementation and cleanup hooks added; in-game verification pending.**
+- [~] Give it small red optics, distinct metal/servo audio, extra durability, restrained stagger, and a recognizable silhouette. **Capped red fallback light and modest extra health added; audio, stagger, and silhouette work pending.**
+- [~] Verify whether actual emissive eye textures work in the tested B42 renderer; otherwise prototype a cheap visual fallback. **Radius-2 red `IsoLightSource` fallback added; emissive behavior remains untested.**
 - [ ] Scale eye visibility with range and fog; move the eyes with the head, extinguish on death, and allow damaged one-eye/flicker variants later.
 - [ ] Advance to original skeletal machine models, walk/run/scan animations, damage states, sparks, and possibly a crawling state only after the first threat works.
 - [ ] Later: human-looking infiltrators with damage revealing machinery, rare reveal events, and stronger perception.
-- [ ] Add sandbox controls for spawn frequency and difficulty plus debug spawn/glow toggles.
+- [~] Add sandbox controls for spawn frequency and difficulty plus debug spawn/glow toggles. **Spawn, difficulty, optics, and light-cap options plus a debug spawn helper added; in-game verification pending.**
 
 **Horror acceptance:** two faint red points appear in the haze before the enemy body is clear.
 
