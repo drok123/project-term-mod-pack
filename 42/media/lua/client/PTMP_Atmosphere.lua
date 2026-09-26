@@ -201,16 +201,22 @@ Events.OnGameStart.Add(function()
 end)
 Events.EveryOneMinute.Add(update)
 
--- Direct on/off comparison in single-player, including existing saves whose
--- sandbox page was unavailable when the save was created.
+ProjectTerm = ProjectTerm or {}
+
+function ProjectTerm.toggleAtmosphere()
+    if (isClient and isClient()) or (isServer and isServer()) then return false end
+    runtimeEnabled = not runtimeEnabled
+    if not runtimeEnabled then release() end
+    lastMinute = nil
+    print('[PROJECT TERM] Atmosphere comparison: ' .. (runtimeEnabled and 'ON' or 'OFF'))
+    if runtimeEnabled then update() end
+    return runtimeEnabled
+end
+
+-- Direct on/off comparison in single-player, including existing saves.
 if Events.OnKeyPressed then
     Events.OnKeyPressed.Add(function(key)
         if not Keyboard or key ~= Keyboard.KEY_F8 then return end
-        if (isClient and isClient()) or (isServer and isServer()) then return end
-        runtimeEnabled = not runtimeEnabled
-        if not runtimeEnabled then release() end
-        lastMinute = nil
-        print('[PROJECT TERM] Atmosphere comparison: ' .. (runtimeEnabled and 'ON' or 'OFF'))
-        if runtimeEnabled then update() end
+        ProjectTerm.toggleAtmosphere()
     end)
 end
