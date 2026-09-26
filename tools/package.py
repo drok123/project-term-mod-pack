@@ -2,11 +2,12 @@
 """Package only installable mod files, not the repository or source assets."""
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
-from validate_mod import REQUIRED_FILES, ROOT, validate
+from validate_mod import ROOT, required_files, validate
 
 errors = validate()
 if errors:
     raise SystemExit('\n'.join(errors))
+required = required_files()
 output = ROOT / 'dist' / 'ProjectTermModPack-B42-atmosphere-candidate.zip'
 output.parent.mkdir(exist_ok=True)
 with ZipFile(output, 'w', ZIP_DEFLATED) as archive:
@@ -21,7 +22,7 @@ with ZipFile(output) as archive:
     names = set(archive.namelist())
     missing = {
         (Path('project-term-mod-pack') / path).as_posix()
-        for path in REQUIRED_FILES
+        for path in required
     } - names
     if missing:
         raise SystemExit('ZIP missing required files:\n' + '\n'.join(sorted(missing)))

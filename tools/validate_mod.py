@@ -29,10 +29,33 @@ REQUIRED_FILES = (
     Path('common/README.txt'),
 )
 
+HUNTER_FILES = (
+    Path('42/media/lua/client/ProjectTerm/ProjectTermHunterOptics.lua'),
+    Path('42/media/lua/server/ProjectTerm/ProjectTermHunterSpawn.lua'),
+    Path('42/media/lua/shared/ProjectTerm/ProjectTermHunterConfig.lua'),
+)
+HUNTER_DOC = Path('docs/RED_EYE_HUNTER.md')
+HUNTER_OPTIONS = (
+    'HuntersEnabled',
+    'HunterChance',
+    'HunterDifficulty',
+    'RedOpticsEnabled',
+    'MaxActiveHunterLights',
+)
+
+
+def hunter_group_present() -> bool:
+    return any((MOD / relative).exists() for relative in HUNTER_FILES + (HUNTER_DOC,))
+
+
+def required_files() -> tuple[Path, ...]:
+    """Return unconditional files plus the complete hunter trio when activated."""
+    return REQUIRED_FILES + (HUNTER_FILES if hunter_group_present() else ())
+
 
 def validate() -> list[str]:
     errors = []
-    for relative in REQUIRED_FILES:
+    for relative in required_files():
         required = MOD / relative
         if not required.exists():
             errors.append(f'Missing: {relative}')
@@ -58,15 +81,34 @@ def validate() -> list[str]:
         errors.append('Nested mod/ directory would break direct GitHub Desktop installation')
     if TRANSLATIONS.exists() and OPTIONS.exists():
         try:
+            options_text = OPTIONS.read_text(encoding='utf-8')
             labels = json.loads(TRANSLATIONS.read_text(encoding='utf-8'))
             if not isinstance(labels, dict):
                 errors.append('Sandbox.json must be a JSON object')
             else:
-                pages = re.findall(r'\bpage\s*=\s*(\w+)', OPTIONS.read_text(encoding='utf-8'))
-                translations = re.findall(r'\btranslation\s*=\s*(\w+)', OPTIONS.read_text(encoding='utf-8'))
+                pages = re.findall(r'\bpage\s*=\s*(\w+)', options_text)
+                translations = re.findall(r'\btranslation\s*=\s*(\w+)', options_text)
                 for key in {f'Sandbox_{page}' for page in pages} | {f'Sandbox_{name}' for name in translations}:
                     if not labels.get(key):
                         errors.append(f'Missing sandbox translation: {key}')
+
+                hunter_keys = {f'Sandbox_ProjectTerm_{name}' for name in HUNTER_OPTIONS}
+                hunter_options_present = any(
+                    re.search(rf'\boption\s+ProjectTerm\.{re.escape(name)}\b', options_text)
+                    for name in HUNTER_OPTIONS
+                )
+                hunter_labels_present = any(key in labels for key in hunter_keys)
+                if hunter_group_present() or hunter_options_present or hunter_labels_present:
+                    for name in HUNTER_OPTIONS:
+                        option_pattern = rf'\boption\s+ProjectTerm\.{re.escape(name)}\b'
+                        if not re.search(option_pattern, options_text):
+                            errors.append(f'Missing hunter sandbox option: ProjectTerm.{name}')
+                        translation = f'ProjectTerm_{name}'
+                        if translation not in translations:
+                            errors.append(f'Missing hunter option translation: {translation}')
+                        key = f'Sandbox_{translation}'
+                        if not labels.get(key):
+                            errors.append(f'Missing sandbox translation: {key}')
         except json.JSONDecodeError as exc:
             errors.append(f'Invalid Sandbox.json: {exc}')
     return errors

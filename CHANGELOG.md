@@ -9,6 +9,8 @@
 - Kept the interior color shift deliberately weaker than the exterior grade.
 - Extended the Lua mock to check restrained daytime color, stronger night-blue
   color, interior legibility, and the existing clean-release controls.
+- Added conditional packaging, sandbox-label, and Lua syntax gates for the
+  separately developed Red-Eye Hunter file set.
 - In-game day/night, interior/rain, and combined-package sandbox label proof
   remains pending.
 

@@ -6,6 +6,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / '42/media/lua/client/PTMP_Atmosphere.lua'
+LUA_ROOT = ROOT / '42/media/lua'
+PROJECT_TERM_SOURCES = sorted(
+    path for path in LUA_ROOT.rglob('*.lua')
+    if 'ProjectTerm' in path.relative_to(LUA_ROOT).parts
+)
 library = ctypes.util.find_library('lua5.4')
 if not library:
     raise SystemExit('Lua 5.4 shared library unavailable; cannot run mock check')
@@ -17,6 +22,7 @@ lua.luaL_loadfilex.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_char_p
 lua.lua_pcallk.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_longlong, ctypes.c_void_p]
 lua.lua_tolstring.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_void_p]
 lua.lua_tolstring.restype = ctypes.c_char_p
+lua.lua_settop.argtypes = [ctypes.c_void_p, ctypes.c_int]
 lua.lua_close.argtypes = [ctypes.c_void_p]
 state = lua.luaL_newstate()
 lua.luaL_openlibs(state)
@@ -28,7 +34,17 @@ def run(code: bytes, filename=False):
         raise RuntimeError(lua.lua_tolstring(state, -1, None).decode())
 
 
+def check_syntax(path: Path):
+    if lua.luaL_loadfilex(state, str(path).encode(), None):
+        message = lua.lua_tolstring(state, -1, None).decode()
+        lua.lua_settop(state, -2)
+        raise RuntimeError(f'{path.relative_to(ROOT)}: {message}')
+    lua.lua_settop(state, -2)  # Discard the compiled chunk without running gameplay code.
+
+
 try:
+    for source in PROJECT_TERM_SOURCES:
+        check_syntax(source)
     run(b'''
         callbacks = {}
         Events = {
@@ -160,6 +176,9 @@ try:
         assert(climate[1].enabled, 'color API failure does not disable haze pass')
         assert(not color.enabled, 'color API failure does not hold a color override')
     ''')
-    print('Lua syntax and mocked climate behavior: OK (game behavior untested)')
+    print(
+        f'Lua syntax ({len(PROJECT_TERM_SOURCES)} ProjectTerm files) and mocked '
+        'climate behavior: OK (game behavior untested)'
+    )
 finally:
     lua.lua_close(state)
