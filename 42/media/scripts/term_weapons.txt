@@ -5,14 +5,32 @@ module ProjectTerm
         Base
     }
 
-    /*
-     * Milestone-1 firearm proof.
-     *
-     * This intentionally uses vanilla M16 ammunition/magazine behavior so the
-     * first in-game test isolates model/equip/fire/reload issues from custom
-     * plasma-ammo code. Replace with ProjectTerm energy cells after the model
-     * and basic firearm loop are proven in Build 42.
-     */
+    item ArcCharge
+    {
+        DisplayName = Arc Charge,
+        DisplayCategory = Ammo,
+        ItemType = base:normal,
+        Icon = 556Bullets,
+        Weight = 0.02,
+        Count = 1,
+        CanStack = true,
+    }
+
+    item ArcCell
+    {
+        DisplayName = Arc Energy Cell,
+        DisplayCategory = Ammo,
+        ItemType = base:normal,
+        Icon = 556Clip,
+        Weight = 0.45,
+        CanStack = false,
+        AmmoType = projectterm:arc_charge,
+        GunType = ProjectTerm.ArcPulseRifle,
+        MaxAmmo = 24,
+        StaticModel = GunMagazine,
+        WorldStaticModel = Gun_Magazine_Ground,
+    }
+
     item ArcPulseRifle
     {
         DisplayName = Arc Pulse Rifle,
@@ -27,44 +45,59 @@ module ProjectTerm
 
         StaticModel = Term_ArcPulseRifle,
         WorldStaticModel = Term_ArcPulseRifle,
-        WeaponSprite = AssaultRifle,
+        WeaponSprite = Term_ArcPulseRifle,
 
         IsAimedFirearm = true,
         Ranged = true,
         UseEndurance = false,
 
-        AmmoType = Base.556Bullets,
-        MagazineType = Base.556Clip,
-        MaxAmmo = 30,
+        AmmoType = projectterm:arc_charge,
+        MagazineType = ProjectTerm.ArcCell,
+        MaxAmmo = 24,
+        HaveChamber = false,
+        RackAfterShoot = false,
+        WeaponReloadType = boltaction,
 
         FireMode = Single,
+        FireModePossibilities = Single,
         ProjectileCount = 1,
-        MinDamage = 2.2,
-        MaxDamage = 3.6,
+        MinDamage = 2.8,
+        MaxDamage = 4.2,
         MinRange = 0.61,
-        MaxRange = 12.0,
-        HitChance = 55,
+        MaxRange = 13.5,
+        MaxHitcount = 1,
+        PiercingBullets = false,
+        HitChance = 62,
         AimingPerkHitChanceModifier = 4,
         AimingPerkRangeModifier = 1.5,
         AimingPerkCritModifier = 2,
         AimingPerkMinAngleModifier = 0.01,
 
-        AimingTime = 18,
-        RecoilDelay = 12,
-        ReloadTime = 25,
-        SwingTime = 0.5,
-        MinimumSwingTime = 0.5,
+        AimingTime = 15,
+        RecoilDelay = 9,
+        ReloadTime = 22,
+        SwingTime = 0.45,
+        MinimumSwingTime = 0.45,
 
-        CriticalChance = 20,
-        CritDmgMultiplier = 2.0,
-        PushBackMod = 0.35,
-        KnockdownMod = 1.0,
+        CriticalChance = 24,
+        CritDmgMultiplier = 2.1,
+        PushBackMod = 0.25,
+        KnockdownMod = 1.15,
 
-        ConditionMax = 12,
-        ConditionLowerChanceOneIn = 80,
+        ConditionMax = 14,
+        ConditionLowerChanceOneIn = 100,
+        JamGunChance = 0,
 
-        SoundRadius = 45,
-        SoundVolume = 40,
+        SoundRadius = 55,
+        SoundVolume = 45,
+        SoundGain = 1.0,
         SwingSound = M16Shoot,
+        BringToBearSound = M16BringToBear,
+        ClickSound = M16Jam,
+        InsertAmmoSound = M16InsertAmmo,
+        EjectAmmoSound = M16EjectAmmo,
+        RackSound = M16Rack,
+        EquipSound = M16Equip,
+        UnequipSound = M16UnEquip,
     }
 }
