@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+dist/
+work/
+assets/prepared/
+*.blend1
+*.blend2
+console*.txt
+logs.zip
+42/media/sound/ProjectTerm/distant_machine.wav

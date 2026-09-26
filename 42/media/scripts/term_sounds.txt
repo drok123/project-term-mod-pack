@@ -1,0 +1,16 @@
+module Base
+{
+    sound ProjectTermDistantMachine
+    {
+        category = Ambient,
+        is3D = true,
+        loop = false,
+        clip
+        {
+            file = media/sound/ProjectTerm/distant_machine.wav,
+            distanceMin = 5,
+            distanceMax = 80,
+            volume = 0.6,
+        }
+    }
+}

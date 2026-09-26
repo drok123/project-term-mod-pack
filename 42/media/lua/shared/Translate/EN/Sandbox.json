@@ -1,0 +1,23 @@
+{
+  "Sandbox_ProjectTerm": "PROJECT TERM",
+  "Sandbox_AtmosphereEnabled": "Enable atmosphere",
+  "Sandbox_AtmosphereEnabled_tooltip": "Enable the experimental gloomy climate layer. Disable to use vanilla climate.",
+  "Sandbox_AtmosphereIntensity": "Overall atmosphere (0\u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u01532)",
+  "Sandbox_AtmosphereIntensity_tooltip": "0 preserves vanilla climate. 1 is the intended brooding look; 2 doubles the effect.",
+  "Sandbox_HazeDensity": "Distant haze (0\u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u01532)",
+  "Sandbox_HazeDensity_tooltip": "Controls the added thin haze, not naturally occurring fog. 0 adds none.",
+  "Sandbox_Darkness": "Darkness (0\u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u01532)",
+  "Sandbox_Darkness_tooltip": "Adjusts daylight and ambient climate dimming. 0 leaves vanilla brightness.",
+  "Sandbox_ColdTint": "Cold blue-gray light (0\u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u20ac\u01532)",
+  "Sandbox_ColdTint_tooltip": "Subtle blue-gray outdoor tint with weaker indoor tint. 0 leaves natural light colors.",
+  "Sandbox_Debug": "Debug logging",
+  "Sandbox_Debug_tooltip": "Log additional PROJECT TERM diagnostics.",
+  "Sandbox_WeaponLootMultiplier": "Weapon loot multiplier (0\u00e2\u20ac\u201c5)",
+  "Sandbox_WeaponLootMultiplier_tooltip": "Scales PROJECT TERM weapon loot weights. 0 disables new weapon loot.",
+  "Sandbox_AmmoLootMultiplier": "Ammo loot multiplier (0\u00e2\u20ac\u201c5)",
+  "Sandbox_AmmoLootMultiplier_tooltip": "Scales PROJECT TERM ammunition loot weights. 0 disables new ammo loot.",
+  "Sandbox_AmbienceEnabled": "Distant machine ambience",
+  "Sandbox_AmbienceEnabled_tooltip": "Rare original positional turbine cues in single-player. No gameplay noise or enemy spawns.",
+  "Sandbox_AudioFrequency": "Ambience frequency (0\u20133)",
+  "Sandbox_AudioFrequency_tooltip": "0 disables automatic cues. 1 gives long quiet intervals; at least 90 real seconds between automatic cues."
+}

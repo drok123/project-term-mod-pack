@@ -2,7 +2,11 @@
 
 This package stages the 12 supplied Meshy GLBs for Project Zomboid Build 42.
 
-## What is ready
+## Repository status (2026-09-26)
+
+The Git tree has declarations only. The 12 previously prepared models and 36 textures were recovered locally from the existing test installation into ignored `assets/prepared/`. `tools/package.py` overlays that directory into installable `42/media/` and refuses unresolved declarations. Original GLBs, source hashes and preparation manifests are not in this checkout; the claims below describe the prior preparation notes, not independently repeated conversion work.
+
+## Prior preparation notes
 - Clean stable asset IDs (no timestamped Meshy names).
 - Aggressively reduced static meshes for isometric/game use.
 - Y-up source geometry converted to Z-up staging geometry.

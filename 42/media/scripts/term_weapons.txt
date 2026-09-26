@@ -48,6 +48,12 @@ module ProjectTerm
         WeaponSprite = Term_ArcPulseRifle,
 
         IsAimedFirearm = true,
+        SubCategory = Firearm,
+        Tags = base:hasmetal;base:firearm,
+        IdleAnim = Idle_Weapon2,
+        RunAnim = Run_Weapon2,
+        SwingAnim = Rifle,
+        SwingAmountBeforeImpact = 0.0,
         Ranged = true,
         UseEndurance = false,
 
