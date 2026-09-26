@@ -86,10 +86,10 @@ project-term-mod-pack/
 
 ## 6. Energy weapon prototype
 
-- [ ] Make one original plasma rifle, one rare energy-cell ammo type, and a working fire/reload/damage loop.
-- [ ] Add a bright but brief muzzle effect, purple/red streak or feasible beam illusion, impact flash, sparks, smoke, and punchy industrial audio.
-- [ ] Keep damage high and ammo scarce; make firing conspicuous to nearby threats if the engine permits.
-- [ ] Verify inventory behavior, save/load, sound range, collisions, and performance.
+- [~] Make one original plasma rifle, one rare energy-cell ammo type, and a working fire/reload/damage loop. **Arc Pulse Rifle + registered Arc Charge + Arc Energy Cell are implemented; in-game fire/reload validation pending.**
+- [~] Add a bright but brief muzzle effect, purple/red streak or feasible beam illusion, impact flash, sparks, smoke, and punchy industrial audio. **Brief violet muzzle-light flash implemented; tracer/impact/sparks/smoke/custom audio pending.**
+- [~] Keep damage high and ammo scarce; make firing conspicuous to nearby threats if the engine permits. **High-damage/rare-loot tuning and loud firearm radius are staged; gameplay balance pending.**
+- [ ] Verify inventory behavior, save/load, sound range, collisions, and performance. **Drop-in test build generated 2026-09-26 for this pass.**
 - [ ] Later: heat, maintenance, pistol, carbine, heavy model, resistance-built model, and machine-only variants.
 - [ ] Add debug give-weapon and effect-spawn controls.
 
