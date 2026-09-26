@@ -1,0 +1,13 @@
+{
+  "Sandbox_ProjectTerm": "PROJECT TERM",
+  "Sandbox_AtmosphereEnabled": "Enable atmosphere",
+  "Sandbox_AtmosphereEnabled_tooltip": "Enable the experimental gloomy climate layer. Disable to use vanilla climate.",
+  "Sandbox_AtmosphereIntensity": "Overall atmosphere (0–2)",
+  "Sandbox_AtmosphereIntensity_tooltip": "0 preserves vanilla climate. 1 is the intended brooding look; 2 doubles the effect.",
+  "Sandbox_HazeDensity": "Distant haze (0–2)",
+  "Sandbox_HazeDensity_tooltip": "Controls the added thin haze, not naturally occurring fog. 0 adds none.",
+  "Sandbox_Darkness": "Darkness (0–2)",
+  "Sandbox_Darkness_tooltip": "Adjusts daylight and ambient climate dimming. 0 leaves vanilla brightness.",
+  "Sandbox_ColdTint": "Cold blue-gray light (0–2)",
+  "Sandbox_ColdTint_tooltip": "Subtle blue-gray outdoor tint with weaker indoor tint. 0 leaves natural light colors."
+}

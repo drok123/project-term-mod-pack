@@ -5,10 +5,10 @@
 ## 0. Start here
 
 - [ ] Record the exact Build 42 version tested and whether the target is single-player only or multiplayer.
-- [x] Add a Build 42 mod manifest and folder layout based on a known working B42 example. **In-game Mods-menu verification still pending.**
+- [x] Add a Build 42 mod manifest and folder layout based on a known working B42 example. **The combined 0.2.1 package still needs a Mods-menu screenshot.**
 - [ ] Keep installable game files separate from source assets, documentation, and helper tools.
 - [x] Add a README with install path, dev workflow, supported game version, controls, known issues, and test instructions.
-- [~] Add a changelog, `.gitignore`, and a short milestone log. **README + changelog added; `.gitignore`/milestone log still pending.**
+- [x] Add a changelog, `.gitignore`, and a short milestone log.
 - [ ] Capture `console.txt` for every test; stop on load errors or repeated log spam.
 - [ ] Verify the APIs and asset formats against the actual installed B42 build before relying on them. A helicopter-event position, emissive material, dynamic light cone, or live world-model hook is a research question until proven in-game.
 
@@ -39,14 +39,14 @@ project-term-mod-pack/
 ## 2. First playable atmosphere
 
 - [ ] Inspect the tested B42 weather, fog, darkness, color, and lighting hooks; log what is actually exposed to Lua.
-- [ ] Add a persistent *smoky* baseline haze, with occasional denser periods, while keeping nearby streets navigable.
-- [ ] Tune darkness and desaturation toward blue/gray without crushing indoor visibility.
+- [~] Add a persistent *smoky* baseline haze, with occasional denser periods, while keeping nearby streets navigable. **Experimental climate pass added; controlled visual validation pending.**
+- [~] Tune darkness and desaturation toward blue/gray without crushing indoor visibility. **Sandbox-controlled dimming/tint added; day/night and interior A/B gates pending.**
 - [ ] Test day/night, indoors/outdoors, rain and weather transitions; make settings reversible on mod disable.
 - [ ] Add lightweight ash or soot detail only where the engine can support it without excessive per-frame work.
 - [ ] Add rare distant red illumination and brief machine-related light cues where technically feasible.
 - [ ] Add restrained positional ambience: wind over ruins, distant turbines, servo/metal movement, electrical hum, far-off gunfire or plasma, and explosions.
-- [ ] Expose atmospheric intensity, haze density, darkness, ash, and audio frequency in sandbox settings.
-- [ ] Add debug commands to force fog, night, ambience, and atmosphere on/off.
+- [~] Expose atmospheric intensity, haze density, darkness, ash, and audio frequency in sandbox settings. **Atmosphere, haze, darkness, and cold tint are staged; ash/audio remain pending.**
+- [~] Add debug commands to force fog, night, ambience, and atmosphere on/off. **F8 atmosphere comparison is staged; the other controls remain pending.**
 
 **Visual acceptance:** the world remains recognizable up close; distant streets and rooftops recede into dirty darkness. Nights feel dangerous and interiors remain usable.
 
@@ -103,9 +103,9 @@ project-term-mod-pack/
 
 ## 8. Tools, settings, and performance
 
-- [ ] Centralize configuration and lightweight logging. Add a debug mode with spawn counts, craft positions, update costs, and event/path traces.
-- [ ] Debug actions: force fog/night; toggle atmosphere, eyes, and searchlight; spawn hunter, craft, prop set, or weapon; trigger flyover; reload config where safe.
-- [ ] Sandbox controls: atmosphere, fog, ash, darkness, machine density/difficulty, aircraft frequency, weapon and resistance loot rarity, prop density, audio frequency, and machine-zone density.
+- [~] Centralize configuration and lightweight logging. Add a debug mode with spawn counts, craft positions, update costs, and event/path traces. **Atmosphere settings and concise console markers exist; broader diagnostics remain pending.**
+- [~] Debug actions: force fog/night; toggle atmosphere, eyes, and searchlight; spawn hunter, craft, prop set, or weapon; trigger flyover; reload config where safe. **F8 toggles atmosphere in single-player; other actions remain pending.**
+- [~] Sandbox controls: atmosphere, fog, ash, darkness, machine density/difficulty, aircraft frequency, weapon and resistance loot rarity, prop density, audio frequency, and machine-zone density. **Atmosphere, haze, darkness, and cold tint are staged.**
 - [ ] Plan presets: cinematic, survival, brutal, atmosphere only, machines only.
 - [ ] Avoid full-world or per-zombie scans every frame. Bound active entities, effects, and lights; despawn outside useful range.
 - [ ] Prefer static wreckage and LOD/simpler distant craft. Profile Louisville, rural zones, high zombie density, night, and heavy fog.
@@ -120,15 +120,15 @@ project-term-mod-pack/
 
 ## 10. Implementation order and gates
 
-1. [~] Repository skeleton, README, and manifest are in place; **in-game mod-menu proof pending.**
+1. [~] Repository skeleton, README, and manifest are in place; **combined-package Mods-menu proof pending.**
 2. [ ] Error logging, debug toggles, and exact-version/API notes.
-3. [ ] Dark lighting and controllable haze; verify interiors and weather.
-4. [ ] Sandbox settings and restrained machine ambience.
+3. [~] Dark lighting and controllable haze are staged; **verify day/night, interiors, F8 A/B, and weather.**
+4. [~] Atmosphere sandbox settings are staged; restrained machine ambience remains pending.
 5. [ ] Skull/wreck prop and bounded placement proof.
 6. [ ] Red-eye humanoid prototype, damage/death/cleanup, and audio.
 7. [ ] Investigate helicopter event; visible moving craft placeholder.
 8. [ ] Add craft silhouette, turbine, fog behavior, and measured searchlight.
-9. [~] Arc Pulse Rifle firearm/model prototype added using temporary vanilla 5.56 mechanics; **custom energy cell, projectile/VFX, and audio pending.**
+9. [~] Arc Pulse Rifle firearm/model prototype uses registered Arc Charges and an Arc Energy Cell; **in-game behavior, projectile/tracer VFX, and custom audio remain pending.**
 10. [ ] Integrate, profile, test save/reload, and package the first playable build.
 
 **Every gate:** mod appears in the menu; new save loads without errors; check existing-save behavior; no runaway spawning or log spam; performance remains acceptable; document single-player/multiplayer support accurately.
