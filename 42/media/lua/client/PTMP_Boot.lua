@@ -1,6 +1,3 @@
--- Minimal load diagnostic. Keep this tiny until the B42 load gate is proven.
 if Events and Events.OnGameStart then
-    Events.OnGameStart.Add(function()
-        print('[PROJECT TERM] v0.3.6 client Lua loaded; verify exact game version and console.txt.')
-    end)
+ Events.OnGameStart.Add(function() print('[PROJECT TERM] v0.4.0 weapon integration build loaded; verify console.txt.') end)
 end

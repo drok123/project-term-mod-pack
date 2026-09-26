@@ -1,0 +1,15 @@
+module Base
+{
+    model Term_ArcPulseRifle { mesh = Terminator/arc_pulse_rifle, texture = Terminator/arc_pulse_rifle, scale = 0.285, }
+    model Term_IronstormCannon { mesh = Terminator/ironstorm_cannon, texture = Terminator/ironstorm_cannon, scale = 0.285, }
+    model Term_IronViper { mesh = Terminator/iron_viper, texture = Terminator/iron_viper, scale = 0.285, }
+    model Term_TerminatorEndoskeleton { mesh = Terminator/terminator_endoskeleton, texture = Terminator/terminator_endoskeleton, scale = 1.0, }
+    model Term_SilverSentinel { mesh = Terminator/silver_sentinel, texture = Terminator/silver_sentinel, scale = 1.0, }
+    model Term_IronReaper { mesh = Terminator/iron_reaper, texture = Terminator/iron_reaper, scale = 1.0, }
+    model Term_SteelSentinel { mesh = Terminator/steel_sentinel, texture = Terminator/steel_sentinel, scale = 1.0, }
+    model Term_RustbornSentinel { mesh = Terminator/rustborn_sentinel, texture = Terminator/rustborn_sentinel, scale = 1.0, }
+    model Term_IronShadowGunship { mesh = Terminator/iron_shadow_gunship, texture = Terminator/iron_shadow_gunship, scale = 1.0, }
+    model Term_IroncladSentinelA { mesh = Terminator/ironclad_sentinel_a, texture = Terminator/ironclad_sentinel_a, scale = 1.0, }
+    model Term_IroncladSentinelB { mesh = Terminator/ironclad_sentinel_b, texture = Terminator/ironclad_sentinel_b, scale = 1.0, }
+    model Term_CyberneticMotorcycle { mesh = Terminator/cybernetic_motorcycle, texture = Terminator/cybernetic_motorcycle, scale = 1.0, }
+}
