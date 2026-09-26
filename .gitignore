@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+dist/
+work/
+assets/prepared/
+*.blend1
+*.blend2
+console*.txt
+logs.zip

@@ -2,14 +2,18 @@
 
 > **Project brief:** Turn Project Zomboid Build 42 into a machine-occupied future wasteland years after nuclear destruction: old ruins, survivors in the rubble, oppressive smoke, red-eyed hunters, flying patrol craft, and scarce plasma weapons. The visual reference is dark, dirty 1980s future-war horror. Build an original identity and assets for public distribution.
 
+## Current pass — 2026-09-26
+
+0.2.0 candidate: actual installed build **42.20.4 b0bbce05d5**, **single-player first**. See `docs/MILESTONES.md`, `docs/API_FINDINGS.md`, and `docs/TEST_PLAN.md`. `[x]` means the stated repository task is done; `[~]` means implemented or partly verified, with game acceptance outstanding. No new integrated in-game run has been performed.
+
 ## 0. Start here
 
-- [ ] Record the exact Build 42 version tested and whether the target is single-player only or multiplayer.
+- [x] Record exact inspected build and target: **42.20.4 b0bbce05d5, single-player**. Existing log reviewed; new integrated playtest pending.
 - [x] Add a Build 42 mod manifest and folder layout based on a known working B42 example. **In-game Mods-menu verification still pending.**
-- [ ] Keep installable game files separate from source assets, documentation, and helper tools.
+- [x] Keep installable game files separate from source assets, documentation, and helper tools. **Packager whitelists 42/common plus staged exports; source area and asset checks added.**
 - [x] Add a README with install path, dev workflow, supported game version, controls, known issues, and test instructions.
-- [~] Add a changelog, `.gitignore`, and a short milestone log. **README + changelog added; `.gitignore`/milestone log still pending.**
-- [ ] Capture `console.txt` for every test; stop on load errors or repeated log spam.
+- [x] Add a changelog, `.gitignore`, and a short milestone log.
+- [~] Capture `console.txt` for every test; **snapshot tool added and prior failing log captured; future runs still required.** stop on load errors or repeated log spam.
 - [ ] Verify the APIs and asset formats against the actual installed B42 build before relying on them. A helicopter-event position, emissive material, dynamic light cone, or live world-model hook is a research question until proven in-game.
 
 Suggested repository layout (adjust the installable folder names to the tested B42 structure):
@@ -38,14 +42,14 @@ project-term-mod-pack/
 
 ## 2. First playable atmosphere
 
-- [ ] Inspect the tested B42 weather, fog, darkness, color, and lighting hooks; log what is actually exposed to Lua.
-- [ ] Add a persistent *smoky* baseline haze, with occasional denser periods, while keeping nearby streets navigable.
-- [ ] Tune darkness and desaturation toward blue/gray without crushing indoor visibility.
+- [x] Inspect installed B42 climate float/color APIs and document exposed hooks. **Installed JAR reflection and vanilla Lua inspected; visual acceptance remains separate.**
+- [~] Add a persistent *smoky* baseline haze, with occasional denser periods, while keeping nearby streets navigable.
+- [~] Tune darkness/desaturation and cold tint. **Prior local implementation integrated, mocked behavior passes; interior visibility and visual tuning pending.**
 - [ ] Test day/night, indoors/outdoors, rain and weather transitions; make settings reversible on mod disable.
 - [ ] Add lightweight ash or soot detail only where the engine can support it without excessive per-frame work.
 - [ ] Add rare distant red illumination and brief machine-related light cues where technically feasible.
 - [ ] Add restrained positional ambience: wind over ruins, distant turbines, servo/metal movement, electrical hum, far-off gunfire or plasma, and explosions.
-- [ ] Expose atmospheric intensity, haze density, darkness, ash, and audio frequency in sandbox settings.
+- [~] Expose sandbox settings. **Atmosphere, intensity, haze, darkness and cold tint implemented; ash/audio await their systems.**
 - [ ] Add debug commands to force fog, night, ambience, and atmosphere on/off.
 
 **Visual acceptance:** the world remains recognizable up close; distant streets and rooftops recede into dirty darkness. Nights feel dangerous and interiors remain usable.
@@ -91,7 +95,7 @@ project-term-mod-pack/
 - [~] Keep damage high and ammo scarce; make firing conspicuous to nearby threats if the engine permits. **High-damage/rare-loot tuning and loud firearm radius are staged; gameplay balance pending.**
 - [ ] Verify inventory behavior, save/load, sound range, collisions, and performance. **Drop-in test build generated 2026-09-26 for this pass.**
 - [ ] Later: heat, maintenance, pistol, carbine, heavy model, resistance-built model, and machine-only variants.
-- [ ] Add debug give-weapon and effect-spawn controls.
+- [~] Add debug controls. **Opt-in single-player right-click weapon kit implemented and tested in Kahlua; standalone effect spawn pending.**
 
 ## 7. Searchlights and audio
 
@@ -103,7 +107,7 @@ project-term-mod-pack/
 
 ## 8. Tools, settings, and performance
 
-- [ ] Centralize configuration and lightweight logging. Add a debug mode with spawn counts, craft positions, update costs, and event/path traces.
+- [~] Centralize configuration and lightweight logging. **Shared config/logger, deduplicated warnings and debug setting added.** Add a debug mode with spawn counts, craft positions, update costs, and event/path traces.
 - [ ] Debug actions: force fog/night; toggle atmosphere, eyes, and searchlight; spawn hunter, craft, prop set, or weapon; trigger flyover; reload config where safe.
 - [ ] Sandbox controls: atmosphere, fog, ash, darkness, machine density/difficulty, aircraft frequency, weapon and resistance loot rarity, prop density, audio frequency, and machine-zone density.
 - [ ] Plan presets: cinematic, survival, brutal, atmosphere only, machines only.
@@ -113,7 +117,7 @@ project-term-mod-pack/
 ## 9. Asset pipeline
 
 - [~] Establish Blender export, game-ready model/animation formats, coordinates, scale, texture/material conventions, collision, and LOD from a real B42 loading test. **Static-mesh prep/export pipeline exists; real B42 load/scale/attachment test still pending.**
-- [~] Separate `assets/source/` from installable exported assets; document naming and export commands. **Naming/export workflow documented; repo-side source/install split will be finalized when binaries are committed.**
+- [~] Separate `assets/source/` from installable exported assets; document naming and export commands. **Source area and export staging separated; packager validates and overlays exports. Local binaries are not committed; clean clones need exports.**
 - [ ] Determine what eye emissive/glow and dynamic light methods the renderer actually supports.
 - [ ] Asset priority: simple red-eye prototype → flying placeholder → ground machine → polished craft → damage variants → resistance props → heavy machines.
 - [ ] Use original models, textures, names, logos, and sounds for a public release; do not include ripped film assets.
@@ -121,14 +125,14 @@ project-term-mod-pack/
 ## 10. Implementation order and gates
 
 1. [~] Repository skeleton, README, and manifest are in place; **in-game mod-menu proof pending.**
-2. [ ] Error logging, debug toggles, and exact-version/API notes.
-3. [ ] Dark lighting and controllable haze; verify interiors and weather.
-4. [ ] Sandbox settings and restrained machine ambience.
+2. [~] Shared logging, F8/debug kit controls and exact-version/API notes implemented; integrated in-game gate pending.
+3. [~] Dark lighting and controllable haze integrated and Kahlua tested; interior/weather visual checks pending.
+4. [~] Sandbox settings integrated; machine ambience pending.
 5. [ ] Skull/wreck prop and bounded placement proof.
 6. [ ] Red-eye humanoid prototype, damage/death/cleanup, and audio.
 7. [ ] Investigate helicopter event; visible moving craft placeholder.
 8. [ ] Add craft silhouette, turbine, fog behavior, and measured searchlight.
-9. [~] Arc Pulse Rifle firearm/model prototype added using temporary vanilla 5.56 mechanics; **custom energy cell, projectile/VFX, and audio pending.**
+9. [~] Arc Pulse Rifle uses registered custom Arc Charge/cell; observed registry exception fixed and brief muzzle flash regression-tested. **In-game firing/reload, tracer/impact and custom audio pending.**
 10. [ ] Integrate, profile, test save/reload, and package the first playable build.
 
 **Every gate:** mod appears in the menu; new save loads without errors; check existing-save behavior; no runaway spawning or log spam; performance remains acceptable; document single-player/multiplayer support accurately.
