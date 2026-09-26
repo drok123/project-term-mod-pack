@@ -5,7 +5,7 @@
 ## 0. Start here
 
 - [ ] Record the exact Build 42 version tested and whether the target is single-player only or multiplayer.
-- [x] Add a Build 42 mod manifest and folder layout based on a known working B42 example. **The combined 0.2.0 package still needs a Mods-menu screenshot.**
+- [x] Add a Build 42 mod manifest and folder layout based on a known working B42 example. **The combined 0.2.1 package still needs a Mods-menu screenshot.**
 - [ ] Keep installable game files separate from source assets, documentation, and helper tools.
 - [x] Add a README with install path, dev workflow, supported game version, controls, known issues, and test instructions.
 - [x] Add a changelog, `.gitignore`, and a short milestone log.

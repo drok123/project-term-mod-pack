@@ -94,10 +94,23 @@ try:
         assert(climate[4].value < climate[4].natural, 'dim ambient')
         assert(climate[6].value > 0.16, 'desaturation')
         assert(color.enabled, 'color channel enabled')
-        assert(color.value.exterior[1] < .8 and color.value.exterior[3] == .65,
-            'exterior cools without changing blue')
+        assert(color.value.exterior[1] < .8 and color.value.exterior[1] > .72,
+            'daytime exterior grade stays restrained')
+        assert(color.value.exterior[3] > .64,
+            'daytime blue reduction stays minimal')
         assert(color.value.interior[1] > .48 and color.value.interior[4] == .8,
-            'interior tint weaker and natural alpha preserved')
+            'daytime interior tint is weak and preserves natural alpha')
+        local dayExteriorRed = color.value.exterior[1]
+        climate[3].natural = 0
+        clock.age = clock.age + 1/60
+        callbacks.minute()
+        assert(color.value.exterior[1] < dayExteriorRed,
+            'night exterior grade is stronger than day')
+        assert(color.value.exterior[3] > color.value.exterior[2],
+            'night exterior shifts toward blue instead of neutral dimming')
+        assert(color.value.interior[1] > .47,
+            'night interior remains substantially less tinted than exterior')
+        climate[3].natural = 0.9
         climate[2].natural = 0.75
         for i=1,90 do clock.age = clock.age + 1/60; callbacks.minute() end
         assert(climate[2].value > 0.7, 'natural heavy fog preserved')

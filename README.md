@@ -16,11 +16,18 @@ Staged for testing:
 - F8 atmosphere on/off comparison
 - static layout, Lua mock, and packaging gates
 
+The 0.2.1 defaults make the exterior grade strongest at night: deeper
+blue-black light, blue/gray desaturation, and thin dirty distance haze. Daytime
+uses a restrained fraction of that grade, and interiors receive a much weaker
+tint so nearby rooms should remain legible. These are tuning intentions, not
+in-game proof.
+
 This remains a draft. The atmosphere deliberately releases its climate
-overrides in multiplayer. An explicit Mods-menu screenshot for this combined
-package and controlled same-location day/night F8 A/B captures are still
-pending. Models, attachments, weapon behavior, weather transitions, reloads,
-performance, and compatibility also need in-game verification.
+overrides in multiplayer. Controlled same-place day/night F8 A/B captures,
+interior/rain checks, and a combined-package PROJECT TERM sandbox label
+screenshot are still pending. Models, attachments, weapon behavior, weather
+transitions, reloads, performance, and compatibility also need in-game
+verification.
 
 ## Install for local testing
 
@@ -40,11 +47,15 @@ Mods menu, and activate it for the test save.
 1. Start Project Zomboid Build 42.20+ and create a single-player Custom
    Sandbox test save.
 2. Set the PROJECT TERM atmosphere options as desired.
-3. Check `console.txt` for both `[PROJECT TERM] v0.2.0 client Lua loaded` and
+3. Check `console.txt` for both `[PROJECT TERM] v0.2.1 client Lua loaded` and
    `[PROJECT TERM] Atmosphere climate layer active (single-player experimental).`
 4. Press F8 and confirm `[PROJECT TERM] Atmosphere comparison: OFF` or `ON`.
-5. Capture controlled same-location day and night comparisons after allowing
-   the transition to settle. Record weather and F8 state.
+5. At one fixed outdoor camera, capture F8 OFF and ON after each transition
+   settles; repeat at day and night and record time, weather, and F8 state.
+6. Repeat the settled F8 comparison indoors and during rain. Confirm nearby
+   rooms remain usable and natural heavy weather is not flattened.
+7. From a new Custom Sandbox setup, capture the PROJECT TERM page and confirm
+   all five labels render instead of raw translation keys.
 
 ## Arc Pulse Rifle test
 

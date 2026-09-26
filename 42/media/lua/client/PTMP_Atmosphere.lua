@@ -2,14 +2,15 @@
 -- gameplay visibility changes are claimed. Tunable parameters are below.
 local Settings = {
     enabled = true,
-    cloudFloor = 0.58,
-    hazeFloor = 0.10,
-    extraHazeMaximum = 0.25,
-    hazePulse = 0.035,             -- subtle multi-hour changes, not fog events
-    daylightFactor = 0.82,
-    ambientFactor = 0.88,
-    globalLightFactor = 0.87,
-    desaturationFloor = 0.17,
+    cloudFloor = 0.64,
+    hazeFloor = 0.12,
+    extraHazeMaximum = 0.28,
+    hazePulse = 0.045,             -- subtle multi-hour changes, not fog events
+    daylightFactor = 0.86,
+    ambientFactor = 0.83,
+    globalLightFactor = 0.84,
+    desaturationFloor = 0.24,
+    dayGradeFloor = 0.35,          -- keep days readable; let nights carry the grade
     transitionMinutes = 18,
 }
 local runtimeEnabled = true
@@ -53,14 +54,16 @@ end
 local function tintColor(color, amount, interior)
     -- Work from the natural light color every minute, so dawn, dusk, rain,
     -- and artificial interior light are not permanently colored or flattened.
-    local red = interior and 0.025 or 0.09
-    local green = interior and 0.008 or 0.035
+    local red = interior and 0.050 or 0.200
+    local green = interior and 0.022 or 0.105
+    local blue = interior and 0.005 or 0.020
     return math.max(0, color:getR() * (1 - red * amount)),
         math.max(0, color:getG() * (1 - green * amount)),
-        color:getB(), color:getAlphaFloat()
+        math.max(0, color:getB() * (1 - blue * amount)),
+        color:getAlphaFloat()
 end
 
-local function applyColdTint(manager, id, amount)
+local function applyColdTint(manager, id, amount, nightWeight)
     if amount <= 0 then
         if colorState and colorState.owned then
             colorState.channel:setEnableOverride(false)
@@ -85,8 +88,10 @@ local function applyColdTint(manager, id, amount)
         end
         if not colorState.owned then return end
         local natural = colorState.channel:getInternalValue()
-        local er, eg, eb, ea = tintColor(natural:getExterior(), amount, false)
-        local ir, ig, ib, ia = tintColor(natural:getInterior(), amount, true)
+        local grade = amount * (Settings.dayGradeFloor
+            + (1 - Settings.dayGradeFloor) * nightWeight)
+        local er, eg, eb, ea = tintColor(natural:getExterior(), grade, false)
+        local ir, ig, ib, ia = tintColor(natural:getInterior(), grade, true)
         colorState.value:setExterior(er, eg, eb, ea)
         colorState.value:setInterior(ir, ig, ib, ia)
         colorState.channel:setOverride(colorState.value, 1.0)
@@ -160,26 +165,35 @@ local function update()
         local ambient = natural('ambient', CM.FLOAT_AMBIENT)
         local globalLight = natural('globalLight', CM.FLOAT_GLOBAL_LIGHT_INTENSITY)
         local desaturation = natural('desaturation', CM.FLOAT_DESATURATION)
+        local nightWeight = clamp(1 - daylight, 0, 1)
+        local darknessWeight = 0.40 + 0.60 * nightWeight
+        local hazeWeight = 0.75 + 0.25 * nightWeight
 
-        -- The pulse adds slight distance variation; actual vanilla fog remains.
+        -- Keep added daytime fog restrained; night and overcast distance carry
+        -- more of the dirty haze while natural heavy weather remains untouched.
         local pulse = (math.sin(minute / 150) + 1) * 0.5 * Settings.hazePulse
         local addedHaze = math.min(Settings.extraHazeMaximum,
             (Settings.hazeFloor + pulse + math.max(0, cloud - 0.5) * 0.06)
-            * intensity * hazeScale)
+            * intensity * hazeScale * hazeWeight)
+        local cloudWeight = 0.65 + 0.35 * nightWeight
         apply(manager, 'cloud', CM.FLOAT_CLOUD_INTENSITY,
-            cloud + (math.max(cloud, Settings.cloudFloor) - cloud) * intensity, elapsed)
+            cloud + (math.max(cloud, Settings.cloudFloor) - cloud)
+                * intensity * cloudWeight, elapsed)
         apply(manager, 'fog', CM.FLOAT_FOG_INTENSITY,
             math.max(fog, addedHaze), elapsed)
         apply(manager, 'daylight', CM.FLOAT_DAYLIGHT_STRENGTH,
-            daylight * (1 - (1 - Settings.daylightFactor) * intensity * darknessScale), elapsed)
+            daylight * (1 - (1 - Settings.daylightFactor)
+                * intensity * darknessScale * darknessWeight), elapsed)
         apply(manager, 'ambient', CM.FLOAT_AMBIENT,
-            ambient * (1 - (1 - Settings.ambientFactor) * intensity * darknessScale), elapsed)
+            ambient * (1 - (1 - Settings.ambientFactor)
+                * intensity * darknessScale * darknessWeight), elapsed)
         apply(manager, 'globalLight', CM.FLOAT_GLOBAL_LIGHT_INTENSITY,
-            globalLight * (1 - (1 - Settings.globalLightFactor) * intensity * darknessScale), elapsed)
+            globalLight * (1 - (1 - Settings.globalLightFactor)
+                * intensity * darknessScale * darknessWeight), elapsed)
         apply(manager, 'desaturation', CM.FLOAT_DESATURATION,
             desaturation + (math.max(desaturation, Settings.desaturationFloor) - desaturation) * intensity, elapsed)
         applyColdTint(manager, CM.COLOR_GLOBAL_LIGHT,
-            clamp(intensity * tintScale, 0, 2))
+            clamp(intensity * tintScale, 0, 2), nightWeight)
 
         if not logged then
             print('[PROJECT TERM] Atmosphere climate layer active (single-player experimental).')

@@ -6,6 +6,31 @@
 > Mods-menu, console, day/night F8 A/B, Arc Pulse, reload, and weather gates on
 > the combined candidate.
 
+## Combined 0.2.1 Future War tuning candidate
+
+Static candidate only; no new in-game evidence was available for this pass.
+The default climate math now increases its exterior blue-black grade as natural
+daylight falls, keeps a restrained daytime grade, adds slightly denser dirty
+distance haze and desaturation, and applies a much weaker color shift indoors.
+The Lua mock exercises day versus night color, interior strength, natural heavy
+fog preservation, sandbox zero values, F8 OFF/ON, disabled atmosphere, color
+API fallback, and multiplayer release. Passing that mock does not prove the
+appearance or Build 42 bindings in game.
+
+Pending 0.2.1 playtest gates:
+
+- Capture the same fixed outdoor location with F8 OFF and ON after the
+  transition settles, once in daylight and once at night. Record game time,
+  weather, and toggle state with each frame.
+- Repeat a settled F8 OFF/ON pair inside a lit building and during rain. Confirm
+  the interior remains legible, close streets remain navigable, and distant
+  streets recede without a pale whiteout.
+- Open a new-game Custom Sandbox setup with the combined mod enabled and
+  capture the PROJECT TERM page. Confirm all five option labels and tooltips
+  render rather than raw translation keys.
+- Save/reload and disable the atmosphere, then confirm vanilla climate returns
+  without repeated PROJECT TERM errors in `console.txt`.
+
 ## Gate 1 — mod appears and loads
 
 - Status: **partial game proof; explicit Mods-menu screenshot and repeat checks pending**

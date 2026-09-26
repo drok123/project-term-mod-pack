@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.1 - 2026-09-26
+
+- Strengthened the default Future War grade with deeper blue-black night
+  exteriors, greater blue/gray desaturation, and slightly dirtier distant haze.
+- Made tint, dimming, cloud, and haze strength follow natural daylight so the
+  effect is strongest at night without turning daytime into a whiteout.
+- Kept the interior color shift deliberately weaker than the exterior grade.
+- Extended the Lua mock to check restrained daytime color, stronger night-blue
+  color, interior legibility, and the existing clean-release controls.
+- In-game day/night, interior/rain, and combined-package sandbox label proof
+  remains pending.
+
 ## 0.2.0 - 2026-09-26
 
 - Added the experimental single-player atmosphere layer with configurable

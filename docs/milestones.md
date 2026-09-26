@@ -1,5 +1,12 @@
 # Milestones
 
+## Future War atmosphere 0.2.1 candidate — 2026-09-26
+
+Retuned the default climate pass around natural daylight: restrained daytime
+color and haze, stronger blue-black night exteriors, and weaker interior color.
+Static release and day/night color checks pass; controlled outdoor A/B,
+interior/rain, and combined-package sandbox label captures remain pending.
+
 ## Combined 0.2.0 candidate — 2026-09-26
 
 Ported the atmosphere, sandbox, F8 comparison, and packaging gates onto the
