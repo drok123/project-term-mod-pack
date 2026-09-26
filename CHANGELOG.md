@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0 - 2026-09-26
+
+- Added the experimental single-player atmosphere layer with configurable
+  intensity, haze, darkness, and cold tint.
+- Added an F8 runtime comparison that releases and restores owned climate
+  overrides.
+- Added Build 42 sandbox labels and options.
+- Added static layout, Lua mock, and installable ZIP gates covering both the
+  atmosphere files and existing ProjectTerm Machines/Arc Pulse files.
+- Added milestone and in-game gate notes while preserving the Arc Pulse Rifle,
+  custom ammunition, FX, model declarations, and loot prototype.
+
 ## 0.1.0 - 2026-09-25
 
 - Added Build 42 mod structure and manifest.
