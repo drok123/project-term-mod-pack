@@ -1,14 +1,14 @@
-# project-term-mod-pack — Build 42 development checklist
+# project-term-mod-pack â€” Build 42 development checklist
 
 > **Project brief:** Turn Project Zomboid Build 42 into a machine-occupied future wasteland years after nuclear destruction: old ruins, survivors in the rubble, oppressive smoke, red-eyed hunters, flying patrol craft, and scarce plasma weapons. The visual reference is dark, dirty 1980s future-war horror. Build an original identity and assets for public distribution.
 
-## Current pass — 2026-09-26
+## Current pass â€” 2026-09-26
 
-0.2.0 candidate: actual installed build **42.20.4 b0bbce05d5**, **single-player first**. See `docs/MILESTONES.md`, `docs/API_FINDINGS.md`, and `docs/TEST_PLAN.md`. `[x]` means the stated repository task is done; `[~]` means implemented or partly verified, with game acceptance outstanding. No new integrated in-game run has been performed.
+0.3.0 candidate: actual installed build **42.20.4 b0bbce05d5**, **single-player first**. See `docs/MILESTONES.md`, `docs/API_FINDINGS.md`, and `docs/TEST_PLAN.md`. `[x]` means the stated repository task is done; `[~]` means implemented or partly verified, with game acceptance outstanding. User tested 0.2.0: load and F8 OFF events passed with no ProjectTerm exceptions; visual change was weak. New 0.3.0 visual/prop/audio acceptance is pending; see `docs/PLAYTEST_0.2.0.md` and `docs/TEST_0.3.0.md`.
 
 ## 0. Start here
 
-- [x] Record exact inspected build and target: **42.20.4 b0bbce05d5, single-player**. Existing log reviewed; new integrated playtest pending.
+- [x] Record exact inspected build and target: **42.20.4 b0bbce05d5, single-player**. User 0.2.0 run reviewed; 0.3.0 acceptance pending.
 - [x] Add a Build 42 mod manifest and folder layout based on a known working B42 example. **In-game Mods-menu verification still pending.**
 - [x] Keep installable game files separate from source assets, documentation, and helper tools. **Packager whitelists 42/common plus staged exports; source area and asset checks added.**
 - [x] Add a README with install path, dev workflow, supported game version, controls, known issues, and test instructions.
@@ -48,19 +48,19 @@ project-term-mod-pack/
 - [ ] Test day/night, indoors/outdoors, rain and weather transitions; make settings reversible on mod disable.
 - [ ] Add lightweight ash or soot detail only where the engine can support it without excessive per-frame work.
 - [ ] Add rare distant red illumination and brief machine-related light cues where technically feasible.
-- [ ] Add restrained positional ambience: wind over ruins, distant turbines, servo/metal movement, electrical hum, far-off gunfire or plasma, and explosions.
-- [~] Expose sandbox settings. **Atmosphere, intensity, haze, darkness and cold tint implemented; ash/audio await their systems.**
-- [ ] Add debug commands to force fog, night, ambience, and atmosphere on/off.
+- [~] Add restrained positional ambience: **original turbine cue, sparse SP scheduler, preview/stop and audio controls staged; attenuation game test and other sound families pending.** wind over ruins, distant turbines, servo/metal movement, electrical hum, far-off gunfire or plasma, and explosions.
+- [~] Expose sandbox settings. **Atmosphere, intensity, haze, darkness, cold tint, ambience enable/frequency implemented; ash pending.**
+- [~] Add debug controls: **F8 on/off, immediate haze/night-lighting previews, status output, ambience preview/stop implemented. True clock/night simulation is not claimed.**
 
 **Visual acceptance:** the world remains recognizable up close; distant streets and rooftops recede into dirty darkness. Nights feel dangerous and interiors remain usable.
 
 ## 3. Ruin and bone set dressing
 
-- [ ] Prove one skull/bone prop and one wreck or debris prop load and render correctly before building a full asset library.
+- [~] Prove one skull/bone prop and one wreck/debris prop. **Debug-only vanilla cow skull plus inert Sentinel chassis implemented; rendering/scale/persistence playtest pending.**
 - [ ] Build reusable aged sets: bones and skull piles; burnt cars, trucks, and military wrecks; concrete, rebar, beams, fences, sandbags, craters, scorch marks, utility poles, streetlights, scrap, and destroyed machine parts.
 - [ ] Add survivor evidence: scavenged shelters, camps, barricades, bunkers, warning signs, caches, damaged radios, and destroyed hideouts.
 - [ ] Test spawn placement around roads, buildings, collision, pathing, and save/reload. Avoid blocking critical routes.
-- [ ] Favor authored zones or bounded spawn passes over scanning the entire map repeatedly.
+- [~] Favor bounded placement. **Prop proof checks four adjacent tiles, caps one pair per save and cleans tagged items only; authored world zones pending.**
 - [ ] Keep vanilla geography recognizable beneath the decay. Prototype a few future-war pockets before attempting map-wide destruction.
 - [ ] Later: ruined industrial districts, highways, Louisville sectors, machine control zones, bone fields, and resistance areas.
 
@@ -117,9 +117,9 @@ project-term-mod-pack/
 ## 9. Asset pipeline
 
 - [~] Establish Blender export, game-ready model/animation formats, coordinates, scale, texture/material conventions, collision, and LOD from a real B42 loading test. **Static-mesh prep/export pipeline exists; real B42 load/scale/attachment test still pending.**
-- [~] Separate `assets/source/` from installable exported assets; document naming and export commands. **Source area and export staging separated; packager validates and overlays exports. Local binaries are not committed; clean clones need exports.**
+- [~] Separate `assets/source/` from installable exported assets; document naming and export commands. **Source area, deterministic original audio generator and export staging separated; packager validates and overlays exports. Local binaries are not committed; clean clones need exports.**
 - [ ] Determine what eye emissive/glow and dynamic light methods the renderer actually supports.
-- [ ] Asset priority: simple red-eye prototype → flying placeholder → ground machine → polished craft → damage variants → resistance props → heavy machines.
+- [ ] Asset priority: simple red-eye prototype â†’ flying placeholder â†’ ground machine â†’ polished craft â†’ damage variants â†’ resistance props â†’ heavy machines.
 - [ ] Use original models, textures, names, logos, and sounds for a public release; do not include ripped film assets.
 
 ## 10. Implementation order and gates
@@ -127,8 +127,8 @@ project-term-mod-pack/
 1. [~] Repository skeleton, README, and manifest are in place; **in-game mod-menu proof pending.**
 2. [~] Shared logging, F8/debug kit controls and exact-version/API notes implemented; integrated in-game gate pending.
 3. [~] Dark lighting and controllable haze integrated and Kahlua tested; interior/weather visual checks pending.
-4. [~] Sandbox settings integrated; machine ambience pending.
-5. [ ] Skull/wreck prop and bounded placement proof.
+4. [~] Sandbox settings and one machine ambience cue implemented; in-game attenuation pending.
+5. [~] Skull/chassis debug placement and bounded cleanup implemented; in-game rendering/save proof pending.
 6. [ ] Red-eye humanoid prototype, damage/death/cleanup, and audio.
 7. [ ] Investigate helicopter event; visible moving craft placeholder.
 8. [ ] Add craft silhouette, turbine, fog behavior, and measured searchlight.

@@ -75,3 +75,21 @@ option ProjectTerm.AmmoLootMultiplier
     page = ProjectTerm,
     translation = AmmoLootMultiplier,
 }
+
+option ProjectTerm.AmbienceEnabled
+{
+    type = boolean,
+    default = true,
+    page = ProjectTerm,
+    translation = AmbienceEnabled,
+}
+
+option ProjectTerm.AudioFrequency
+{
+    type = double,
+    default = 1.0,
+    min = 0.0,
+    max = 3.0,
+    page = ProjectTerm,
+    translation = AudioFrequency,
+}

@@ -1,5 +1,5 @@
 ProjectTerm = ProjectTerm or {}
-ProjectTerm.VERSION = "0.2.0"
+ProjectTerm.VERSION = "0.3.0"
 local warned = {}
 
 function ProjectTerm.getConfig()
@@ -13,10 +13,13 @@ function ProjectTerm.getConfig()
         Debug = vars.Debug == true,
         WeaponLootMultiplier = number("WeaponLootMultiplier", 1, 5),
         AmmoLootMultiplier = number("AmmoLootMultiplier", 1, 5),
+        AmbienceEnabled = vars.AmbienceEnabled ~= false,
+        AudioFrequency = number("AudioFrequency", 1, 3),
     }
 end
 
 function ProjectTerm.log(level, message)
+    level = string.upper(tostring(level))
     if level == "DEBUG" and not ProjectTerm.getConfig().Debug then return end
     print("[ProjectTerm][" .. tostring(level) .. "] " .. tostring(message))
 end

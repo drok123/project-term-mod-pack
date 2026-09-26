@@ -8,4 +8,13 @@ function isServer() return server end
 items = {}
 player = {getInventory = function() return {AddItem = function(_, name) table.insert(items, name); return {} end} end}
 function getSpecificPlayer(_) return player end
-context = {addOption = function(_, _, target, fn) callbacks.give = function() fn(target) end end}
+menu = {}
+ProjectTerm = {
+    Atmosphere = {report=function() end, setPreview=function() end},
+    Props = {place=function() end, cleanup=function() end},
+    Ambience = {preview=function() end, stop=function() end},
+}
+context = {addOption = function(_, label, target, fn)
+    menu[label] = function() fn(target) end
+    if label == "Project Term: give weapon test kit" then callbacks.give = menu[label] end
+end}

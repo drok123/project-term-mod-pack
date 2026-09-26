@@ -85,3 +85,44 @@ manager.getClimateFloat = original
 callbacks.start()
 assert(climate[1].enabled, 'new game resets failure latch')
 callbacks.menu()
+
+-- Start and A/B comparison hit their configured target on the first update.
+SandboxVars.ProjectTerm = {Debug=true}
+climate[1].natural = 0.15
+climate[2].natural = 0
+callbacks.start()
+assert(math.abs(climate[1].value - 0.58) < 0.00001, 'initial cloud target immediate')
+assert(math.abs(climate[3].value - climate[3].natural * .82) < .00001, 'initial dimming immediate')
+callbacks.key(Keyboard.KEY_F8)
+callbacks.key(Keyboard.KEY_F8)
+assert(math.abs(climate[1].value - 0.58) < 0.00001, 'F8 ON immediate')
+local status = ProjectTerm.Atmosphere.report()
+assert(status.enabled and status.channels.cloud.target == 0.58, 'status reports actual target')
+-- Weather transitions remain smooth after the initial application.
+climate[1].natural = 0.9
+clock.age = clock.age + 2/60
+callbacks.minute()
+assert(climate[1].value > .58 and climate[1].value < .9, 'weather cloud transition smooth')
+local ageBefore = clock.age
+assert(ProjectTerm.Atmosphere.setPreview('haze'))
+assert(climate[2].value == .35, 'haze preview immediate')
+assert(ProjectTerm.Atmosphere.setPreview('night'))
+assert(climate[3].value <= .1 and climate[4].value <= .25, 'night lighting caps applied')
+assert(clock.age == ageBefore, 'preview never changes clock')
+assert(ProjectTerm.Atmosphere.setPreview(nil))
+assert(math.abs(climate[3].value - climate[3].natural * .82) < .00001, 'restore normal lighting immediate')
+assert(climate[2].value < .25, 'restore normal haze immediate')
+assert(ProjectTerm.Atmosphere.setPreview('haze'))
+callbacks.key(Keyboard.KEY_F8)
+assert(ProjectTerm.Atmosphere.getStatus().preview == nil, 'F8 OFF clears preview')
+assert(not ProjectTerm.Atmosphere.setPreview('haze'), 'disabled atmosphere rejects preview')
+callbacks.key(Keyboard.KEY_F8)
+SandboxVars.ProjectTerm.Debug = false
+assert(not ProjectTerm.Atmosphere.setPreview('haze'), 'preview requires debug mode')
+SandboxVars.ProjectTerm.Debug = true
+isClient = function() return true end
+assert(not ProjectTerm.Atmosphere.setPreview('night'), 'multiplayer rejects preview')
+isClient = function() return false end
+assert(ProjectTerm.Atmosphere.setPreview('night'))
+callbacks.menu()
+assert(ProjectTerm.Atmosphere.getStatus().preview == nil, 'menu clears preview')

@@ -1,5 +1,7 @@
 # 0.2.0 single-player acceptance
 
+Historical plan. Use [the 0.3.0 quick test](TEST_0.3.0.md) for the current candidate; its atmosphere comparison now applies immediately.
+
 Use a disposable test save on 42.20.4 b0bbce05d5. Disable the older `ProjectTermModPackB42` mod and any duplicate `ProjectTermModPack` installation. Extract the ZIP into a staging directory, then install its `project-term-mod-pack` folder under `Zomboid/mods`. Keep one copy enabled.
 
 1. Check the Mods-menu entry and PROJECT TERM sandbox page. Start with defaults; turn Debug on for the weapon kit.

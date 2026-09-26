@@ -4,6 +4,8 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import subprocess
+import sys
 from zipfile import ZipFile, ZIP_DEFLATED
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,14 +48,18 @@ def validate(files):
                     candidates = [f"42/media/textures/{value}.png"]
                 if not any(candidate in files for candidate in candidates):
                     errors.append(f"{name}: missing {kind} {value}")
+            for sound in re.findall(r"\bfile\s*=\s*(media/sound/[^,\s]+)", text):
+                if "42/" + sound not in files:
+                    errors.append(f"{name}: missing sound {sound}")
     return errors
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--assets", type=Path, default=ROOT / "assets/prepared")
-    parser.add_argument("--output", type=Path, default=ROOT / "dist/ProjectTermModPack-0.2.0.zip")
+    parser.add_argument("--output", type=Path, default=ROOT / "dist/ProjectTermModPack-0.3.0.zip")
     args = parser.parse_args()
+    subprocess.run([sys.executable, str(ROOT / "tools/generate_audio.py")], check=True)
     files = collect(args.assets)
     errors = validate(files)
     if errors:

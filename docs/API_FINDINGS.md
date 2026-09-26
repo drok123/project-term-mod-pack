@@ -18,3 +18,9 @@ Target: **single-player, 42.20.4 b0bbce05d5**, read from local `Zomboid/version.
 Automated checks run the installed Kahlua interpreter with mocked game objects. They verify Lua behavior, not engine rendering, networking, script parsing, shooting, or world persistence. The old local atmosphere package has a historical test log; this integration must earn its own acceptance evidence. Do not run the old `ProjectTermModPackB42` atmosphere mod alongside this package.
 
 Helicopter coordinates, emissive optics, volumetric cones, live aircraft models, rigged hunters, and positional custom audio remain research gates. No implementation claim is made for them.
+
+## 0.3.0 prop and audio bindings
+
+Installed vanilla `server/Foraging/forageServer.lua` uses `ModData.getOrCreate`; `server/ClientCommands.lua` uses `AddWorldInventoryItem` and `transmitRemoveItemFromSquare`. Installed `IsoGridSquare` signatures confirm four-argument string `AddWorldInventoryItem` returns InventoryItem, with `TreatAsSolidFloor`, `isFree(boolean)` and `getWorldObjects`. `Base.Cow_Skull` is declared in installed generated `normal.txt` with a world model. The custom inert chassis reuses the locally prepared Silver Sentinel static mesh; no animation/AI is implied.
+
+Installed IsoWorld bytecode confirms `getFreeEmitter(x,y,z)`, `takeOwnershipOfEmitter` (removes from automatic world tick pool), and `returnOwnershipOfEmitter` (returns to free/current pool). BaseSoundEmitter exposes `playSound`, `tick`, `isEmpty`, `stopAll`. The ambience controller explicitly owns/ticks at most one emitter and returns it on completion, timeout, disable and menu exit. GameSoundScript bytecode confirms `is3D`, `loop`, `file`, `distanceMin`, `distanceMax`, `volume`. The WAV is original procedural audio, regenerated at package time. Real attenuation and Lua binding in a full running scene remain acceptance gates.

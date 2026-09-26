@@ -1,4 +1,4 @@
-ProjectTerm = {log=function() end, warnOnce=function() end}
+ProjectTerm = {getConfig=function() return {Debug=SandboxVars and SandboxVars.ProjectTerm and SandboxVars.ProjectTerm.Debug == true} end, log=function() end, warnOnce=function() end}
 function require() end
 
         callbacks = {}
