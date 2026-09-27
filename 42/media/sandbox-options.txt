@@ -47,3 +47,49 @@ option ProjectTerm.ColdTint
     page = ProjectTerm,
     translation = ColdTint,
 }
+
+option ProjectTerm.Debug
+{
+    type = boolean,
+    default = false,
+    page = ProjectTerm,
+    translation = Debug,
+}
+
+option ProjectTerm.WeaponLootMultiplier
+{
+    type = double,
+    default = 1.0,
+    min = 0.0,
+    max = 5.0,
+    page = ProjectTerm,
+    translation = WeaponLootMultiplier,
+}
+
+option ProjectTerm.AmmoLootMultiplier
+{
+    type = double,
+    default = 1.0,
+    min = 0.0,
+    max = 5.0,
+    page = ProjectTerm,
+    translation = AmmoLootMultiplier,
+}
+
+option ProjectTerm.AmbienceEnabled
+{
+    type = boolean,
+    default = true,
+    page = ProjectTerm,
+    translation = AmbienceEnabled,
+}
+
+option ProjectTerm.AudioFrequency
+{
+    type = double,
+    default = 1.0,
+    min = 0.0,
+    max = 3.0,
+    page = ProjectTerm,
+    translation = AudioFrequency,
+}

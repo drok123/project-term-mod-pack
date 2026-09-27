@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.2 — consolidate latest branch and repair weapon exports
+
+- Preserve 0.4.1 mod ID, haze strength, F8/context toggle and always-available SP rifle kit.
+- Fix reintroduced ItemKey ammo registration, missing loot list and stale boot version; restore tested lifecycle guards and advanced controls.
+- Rebuild three supplied weapon GLBs with all topology/UV/texture pixels retained; correct Arc Pulse scale/axes and provisional grip.
+- Include generated positional audio and handle missing audio with one warning, not a Lua exception.
+- Add exact mesh/native-import regression checks, full package validation and installed-file hash audit.
+- New full in-game acceptance remains pending.
+
+
 ## 0.3.6 — match sandbox option translation keys
 
 - An in-game 42.20.4 screenshot proves the PROJECT TERM sandbox page and all five controls appear on 0.3.5, but each option displays a raw `Sandbox_...` key. The page title translates.

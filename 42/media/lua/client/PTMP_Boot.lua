@@ -1,3 +1,3 @@
-if Events and Events.OnGameStart then
- Events.OnGameStart.Add(function() print('[PROJECT TERM] v0.4.0 weapon integration build loaded; verify console.txt.') end)
-end
+-- Keep this legacy entry point for existing layout checks. The shared boot
+-- module owns the single version message; do not register it twice here.
+require "ProjectTerm/ProjectTermConfig"

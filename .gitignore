@@ -4,3 +4,8 @@ console.txt
 .DS_Store
 Thumbs.db
 __pycache__/
+work/
+assets/prepared/
+assets/source/weapons/*.glb
+42/media/sound/ProjectTerm/distant_machine.wav
+*.pyc

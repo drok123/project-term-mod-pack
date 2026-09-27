@@ -1,9 +1,13 @@
 module ProjectTerm
 {
-    imports { Base }
+    imports
+    {
+        Base
+    }
 
     item ArcCharge
     {
+        DisplayName = Arc Charge,
         DisplayCategory = Ammo,
         ItemType = base:normal,
         Icon = 556Bullets,
@@ -14,6 +18,7 @@ module ProjectTerm
 
     item ArcCell
     {
+        DisplayName = Arc Energy Cell,
         DisplayCategory = Ammo,
         ItemType = base:normal,
         Icon = 556Clip,
@@ -28,25 +33,37 @@ module ProjectTerm
 
     item ArcPulseRifle
     {
+        DisplayName = Arc Pulse Rifle,
         DisplayCategory = Weapon,
         ItemType = base:weapon,
         Icon = AssaultRifle,
+
         Weight = 4.0,
         TwoHandWeapon = true,
         RequiresEquippedBothHands = true,
         AttachmentType = Rifle,
+
         StaticModel = Term_ArcPulseRifle,
         WorldStaticModel = Term_ArcPulseRifle,
         WeaponSprite = Term_ArcPulseRifle,
+
         IsAimedFirearm = true,
+        SubCategory = Firearm,
+        Tags = base:hasmetal;base:firearm,
+        IdleAnim = Idle_Weapon2,
+        RunAnim = Run_Weapon2,
+        SwingAnim = Rifle,
+        SwingAmountBeforeImpact = 0.0,
         Ranged = true,
         UseEndurance = false,
+
         AmmoType = projectterm:arc_charge,
         MagazineType = ProjectTerm.ArcCell,
         MaxAmmo = 24,
         HaveChamber = false,
         RackAfterShoot = false,
         WeaponReloadType = boltaction,
+
         FireMode = Single,
         FireModePossibilities = Single,
         ProjectileCount = 1,
@@ -61,18 +78,22 @@ module ProjectTerm
         AimingPerkRangeModifier = 1.5,
         AimingPerkCritModifier = 2,
         AimingPerkMinAngleModifier = 0.01,
+
         AimingTime = 15,
         RecoilDelay = 9,
         ReloadTime = 22,
         SwingTime = 0.45,
         MinimumSwingTime = 0.45,
+
         CriticalChance = 24,
         CritDmgMultiplier = 2.1,
         PushBackMod = 0.25,
         KnockdownMod = 1.15,
+
         ConditionMax = 14,
         ConditionLowerChanceOneIn = 100,
         JamGunChance = 0,
+
         SoundRadius = 55,
         SoundVolume = 45,
         SoundGain = 1.0,

@@ -2,12 +2,16 @@
 
 > **Project brief:** Turn Project Zomboid Build 42 into a machine-occupied future wasteland years after nuclear destruction: old ruins, survivors in the rubble, oppressive smoke, red-eyed hunters, flying patrol craft, and scarce plasma weapons. The visual reference is dark, dirty 1980s future-war horror. Build an original identity and assets for public distribution.
 
+## Latest integration — 0.4.2
+
+Based on the latest 0.4.1 branch, retaining its mod ID and controls. Fixed the reintroduced registry exception and missing loot target; restored tested atmosphere/prop/audio features; rebuilt all three supplied weapons without removing faces. The user accepted the haze. Six Kahlua suites and native model imports pass, but held-gun placement, sound attenuation, weapon gameplay and active-play performance remain in-game gates. See `docs/REVIEW_0.4.2.md` and `docs/TEST_0.4.2.md`.
+
 ## 0. Start here
 
 - [x] Record the exact Build 42 version tested and whether the target is single-player only or multiplayer. First single-player load: **42.20.4 b0bbce05d5**; multiplayer untested. See `docs/test-log.md`.
 - [ ] Add a Build 42 mod manifest and folder layout based on a known working B42 example; verify the mod appears in the in-game Mods menu before feature work. **Game detects and runs the mod on 42.20.4; explicit Mods-menu screenshot still pending.**
 - [x] Keep installable game files separate from source assets, documentation, and helper tools.
-- [x] Add a README with install path, dev workflow, supported game version, controls, known issues, and test instructions. (Exact tested patch version remains pending.)
+- [x] Add a README with install path, dev workflow, supported game version, controls, known issues, and test instructions. (Inspected and previously tested patch: 42.20.4 b0bbce05d5.)
 - [x] Add a changelog, `.gitignore`, and a short milestone log.
 - [ ] Capture `console.txt` for every test; stop on load errors or repeated log spam. First supplied log reviewed: mod startup has no identified error or repeated message; other game errors remain in that log.
 - [ ] Verify the APIs and asset formats against the actual installed B42 build before relying on them. A helicopter-event position, emissive material, dynamic light cone, or live world-model hook is a research question until proven in-game.

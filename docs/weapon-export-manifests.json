@@ -1,0 +1,164 @@
+[
+  {
+    "source": "Meshy_AI_Arc_Pulse_Rifle_0926102908_texture.glb",
+    "source_sha256": "1d1301a697cf07e7aacd1adf924f9da2ad58e3d687e10ef8d2c8d57e47f0b19a",
+    "asset": "arc_pulse_rifle",
+    "scale": 0.28957335932404893,
+    "grip_source": [
+      -0.08,
+      -0.12,
+      0
+    ],
+    "source_topology": {
+      "vertices": 35409,
+      "triangles": 56094,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "bounds": [
+        [
+          -0.9531400203704834,
+          0.9462059736251831
+        ],
+        [
+          -0.27211999893188477,
+          0.2648870050907135
+        ],
+        [
+          -0.06595700234174728,
+          0.06436599791049957
+        ]
+      ]
+    },
+    "export_topology": {
+      "vertices": 35409,
+      "triangles": 56094,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "bounds": [
+        [
+          -0.019099390739043924,
+          0.018638678241188075
+        ],
+        [
+          -0.29716191114105067,
+          0.25283808885894943
+        ],
+        [
+          -0.04404989911107661,
+          0.11145302302429023
+        ]
+      ]
+    },
+    "triangles_removed": 0,
+    "vertices_removed": 0,
+    "texture_sha256": "f08aa0509d1ae9d65fb84de9f957bed4f64df3ed9ca872565055cc087acb7aa7"
+  },
+  {
+    "source": "Meshy_AI_Iron_Viper_0926102236_texture.glb",
+    "source_sha256": "68967c5cb2ddc9f2a8884732156a803d62b3b0d18c79e3fa9ef137a39b248445",
+    "asset": "iron_viper",
+    "scale": 0.26314542458313467,
+    "grip_source": [
+      -0.08,
+      -0.12,
+      0
+    ],
+    "source_topology": {
+      "vertices": 44829,
+      "triangles": 72076,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "bounds": [
+        [
+          -0.9522830247879028,
+          0.9478070139884949
+        ],
+        [
+          -0.3316819965839386,
+          0.32852399349212646
+        ],
+        [
+          -0.09337799996137619,
+          0.0898590013384819
+        ]
+      ]
+    },
+    "export_topology": {
+      "vertices": 44829,
+      "triangles": 72076,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "bounds": [
+        [
+          -0.02457199344656027,
+          0.023645985059831287
+        ],
+        [
+          -0.27046271308552633,
+          0.22953728691447367
+        ],
+        [
+          -0.05570314886768619,
+          0.11802703670320874
+        ]
+      ]
+    },
+    "triangles_removed": 0,
+    "vertices_removed": 0,
+    "texture_sha256": "b38e032b19fe24e0a5c6d9ab15653ec59021f0f29f09bc3ef8b8390b580efda9"
+  },
+  {
+    "source": "Meshy_AI_Ironstorm_Cannon_0926102641_texture.glb",
+    "source_sha256": "b9e51c4202c2142cc291f551515a1189bce61463dd46a2d82a455c38cbc65c77",
+    "asset": "ironstorm_cannon",
+    "scale": 0.36849727285281064,
+    "grip_source": [
+      -0.08,
+      -0.12,
+      0
+    ],
+    "source_topology": {
+      "vertices": 47854,
+      "triangles": 76840,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "bounds": [
+        [
+          -0.953656017780304,
+          0.945950984954834
+        ],
+        [
+          -0.23171399533748627,
+          0.2423730045557022
+        ],
+        [
+          -0.1308159977197647,
+          0.12681299448013306
+        ]
+      ]
+    },
+    "export_topology": {
+      "vertices": 47854,
+      "triangles": 76840,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "bounds": [
+        [
+          -0.04820533840525279,
+          0.04673024262822756
+        ],
+        [
+          -0.37806014003651134,
+          0.3219398599634887
+        ],
+        [
+          -0.041166302621355295,
+          0.1335334639342554
+        ]
+      ]
+    },
+    "triangles_removed": 0,
+    "vertices_removed": 0,
+    "texture_sha256": "df723a2ea0df212698f0fba04f050dc5e0c14cbde47622aab94605f0b28f0c97"
+  }
+]

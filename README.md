@@ -1,30 +1,34 @@
-# PROJECT TERM — future-war horror for Project Zomboid
+# PROJECT TERM — Future War
 
-Early Build 42 single-player prototype. It contains a **mod-menu/load diagnostic and an experimental atmosphere pass**. Version 0.3.5 loaded on **42.20.4 b0bbce05d5**; the PROJECT TERM sandbox page and five controls appeared, although their labels showed raw keys. Version 0.3.6 corrects those keys and awaits an in-game label check. F8 toggling works without a mod-specific exception. Daylight appearance, weather behavior, mod disable/reload, and full compatibility are unverified. It does not yet contain machines, aircraft, props, or weapons.
+Build 42 **single-player** prototype, version **0.4.2**, targeting **42.20.4 b0bbce05d5**. This integrates the latest 0.4.1 work with the tested weapon, atmosphere, prop and audio fixes. Mod ID remains **ProjectTermModPackB42**.
 
-## Install and test the first gate
+The haze settings are unchanged. F8 or the right-click atmosphere action applies the comparison immediately. The right-click rifle kit remains available on existing single-player saves. Choose **Enable extra test controls**, then right-click again for haze/night previews, skull/chassis placement and cleanup, and positional ambience playback/stop. Sandbox Debug also enables those controls.
 
-1. Run `python3 tools/package.py`. The resulting ZIP is under `dist/`.
-2. Either clone this repository with GitHub Desktop directly to `C:\Users\YOUR_NAME\Zomboid\mods\project-term-mod-pack`, or extract the ZIP's `project-term-mod-pack` folder there. The metadata must be at `...\Zomboid\mods\project-term-mod-pack\42\mod.info`.
-3. Completely restart Project Zomboid Build 42. Find **PROJECT TERM - Future War** in the Mods menu and enable it for a disposable single-player save.
-4. Load the save. Copy `%UserProfile%\Zomboid\console.txt` immediately afterward and look for `[PROJECT TERM] v0.3.6 client Lua loaded`, `Atmosphere climate layer active`, and any errors. A `Cold tint disabled after color API error` line means the optional color channel failed, even if the existing haze layer still runs.
-5. Record the **exact full version displayed by the game** (including patch number) and the menu screenshot in `docs/test-log.md`. Record whether the same save loads cleanly after a restart. Do not mark the gate passed from a ZIP check alone.
+## Install the playable build
 
-If it does not appear, check the precise folder nesting above, remove older copies, restart, and attach the relevant `console.txt` errors. Test a new save first; existing-save behavior remains unverified. When cloning in Desktop, choose `...\Zomboid\mods` as the **parent** Local Path so Desktop creates `project-term-mod-pack` within it, then select the `codex/b42-mod-menu-foundation` branch.
+Exit the game and extract the complete ZIP's `project-term-mod-pack` folder under `Zomboid/mods`. Keep `42/` and `common/` directly inside that folder. Enable only one Project Term installation; the older `ProjectTermModPack` mod ID should be disabled when using this build. Do not copy just the Lua files: models, textures and `42/media/sound/ProjectTerm/distant_machine.wav` are required.
 
-## Development layout
+**A Git checkout is source, not a complete install.** Large prepared model exports remain local build inputs. Git LFS rules are retained, but configured LFS alone does not upload missing assets. `tools/package.py` refuses missing model/texture/sound references and unresolved LFS pointer files.
 
-- `42/`: version-specific game files and mod metadata.
-- `common/`: shared game assets (currently a placeholder).
-- `assets/source/`: original source art and audio when created.
-- `docs/`: recorded test evidence and researched API behavior.
-- `tools/`: package and static layout validation.
-- `dist/`: generated ZIPs, excluded from Git.
+## Current features and proof
 
-Run `python3 tools/validate_mod.py` before packaging. Keep any future assets original for public distribution. `PTMP_Atmosphere.lua` uses vanilla climate channels once per in-game minute and eases into gloomy daylight, muted color, increased cloud cover, and restrained distant haze. It also tries a subtle blue-gray outdoor light tint with a gentler indoor tint; if the color API fails it logs once and keeps the float-based climate layer. Version 0.3.5 moved sandbox labels to the Build 42.15+ JSON translation path. The PROJECT TERM page and five controls now appear in-game; version 0.3.6 corrects their raw label keys. Check the readable labels in a new Custom Sandbox screen after updating. Existing saves can retain old defaults. It does not make literal smoke particles or volumetric lights. Other climate mods can conflict.
+- Controllable haze/tint/dimming, safe override release and instant F8 comparison; the user liked the haze in the prior playtest.
+- Arc Pulse Rifle with custom Arc Charge/cell, corrected registry and firearm animation metadata. Rebuilt Arc Pulse/Iron Viper/Ironstorm exports retain every source face, UV and texture pixel; only the Arc Pulse currently has gameplay.
+- Bounded shot flash, configurable idempotent loot, one debug skull/chassis pair and original positional machine ambience.
+- Six game-Kahlua regression suites and native game-model importer checks pass. These are not a new full game playtest. Final hand alignment, reload/damage, audio attenuation and active-play performance remain to be checked.
+- No active hunter or aircraft is integrated. Review findings and next hunter gates are in [the repair report](docs/REVIEW_0.4.2.md).
 
-**Atmosphere test after menu/load proof:** compare an outdoor street at noon and dusk with the mod off/on. Set Cold blue-gray light to 0 in a separate new sandbox save to isolate the tint, then compare at the same place and time. Check nighttime outdoors, a dark interior, rain, and a weather transition; capture screenshots and `console.txt`. Make sure nearby roads remain visible, interiors remain legible, and natural weather continues. Disable the mod and reload the same save to verify the vanilla look returns. Record results in `docs/test-log.md` before advancing to props or machine behavior.
+## Build and validate
 
-For a faster comparison in single-player, press F8 while unpaused to switch the mod's climate overrides OFF; press it again to restore them. This key works without any sandbox option, including on existing saves if the mod is active. The OFF state releases overrides immediately. After switching ON, allow several in-game minutes for the look to ease back in. Capture both screenshots at the same location and time, and check for `[PROJECT TERM] Atmosphere comparison: OFF` or `ON` in `console.txt`. Key delivery is verified on 0.3.4; the paired visual transition remains unverified.
+Put exports under `assets/prepared/models_X` and `assets/prepared/textures`, or pass `--assets`. Packaging generates the original machine cue from Python source and writes a SHA-256 manifest beside the ZIP.
 
-The supplied main-menu screenshot and console establish version **42.20.4 b0bbce05d5** and a successful single-player mod load. A separate Mods-menu screenshot, daytime comparison, and a save reload check remain to be recorded.
+```text
+python tools/validate_mod.py
+python tools/check_all.py --game "path/to/ProjectZomboid" --javac "path/to/javac"
+python tools/package.py --assets assets/prepared --output dist/ProjectTermModPack-0.4.2.zip
+python tools/verify_install.py dist/ProjectTermModPack-0.4.2.manifest.json --mod-dir "path/to/Zomboid/mods/project-term-mod-pack"
+```
+
+`tools/weapon_mesh.py` rebuilds a supplied static weapon GLB without deleting faces. It needs Pillow only when converting embedded JPEG to lossless PNG. `tools/check_weapon_exports.py` verifies topology, transforms, UVs, normals and decoded image pixels against the source GLBs. Source hashes and exact transforms are recorded in `docs/weapon-export-manifests.json`. The original GLBs are preserved locally, not replaced by exports.
+
+Follow [the quick test](docs/TEST_0.4.2.md) and capture each new console with `python tools/capture_log.py`. Logs and work files are kept local.

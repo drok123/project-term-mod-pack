@@ -1,3 +1,5 @@
+require "ProjectTerm/ProjectTermConfig"
+
 -- Experimental B42 single-player climate layer. No shader, particles, or
 -- gameplay visibility changes are claimed. Tunable parameters are below.
 local Settings = {
@@ -13,12 +15,15 @@ local Settings = {
     transitionMinutes = 18,
 }
 local runtimeEnabled = true
+local preview = nil
+local Atmosphere = {}
+ProjectTerm.Atmosphere = Atmosphere
 
 local function preferences()
     local vars = SandboxVars and SandboxVars.ProjectTerm or {}
     local function scale(name)
         local value = tonumber(vars[name])
-        if value == nil then return 1 end
+        if value == nil or value ~= value then return 1 end
         return math.max(0, math.min(2, value))
     end
     return vars.AtmosphereEnabled ~= false and runtimeEnabled,
@@ -80,7 +85,7 @@ local function applyColdTint(manager, id, amount)
                 value = ClimateColorInfo.new(),
             }
             if not colorState.owned then
-                print('[PROJECT TERM] Global light color already overridden; leaving it alone.')
+                ProjectTerm.warnOnce('atmosphere-color-owned', 'Global light color already overridden; leaving it alone.')
             end
         end
         if not colorState.owned then return end
@@ -98,7 +103,7 @@ local function applyColdTint(manager, id, amount)
         end
         colorState = nil
         colorFailed = true
-        print('[PROJECT TERM] Cold tint disabled after color API error: ' .. tostring(err))
+        ProjectTerm.warnOnce('atmosphere-color-api', 'Cold tint disabled after color API error: ' .. tostring(err))
     end
 end
 
@@ -111,7 +116,7 @@ local function getState(manager, name, id)
     local state = { channel = channel, owned = not channel:isEnableOverride(), current = nil }
     states[name] = state
     if not state.owned then
-        print('[PROJECT TERM] Climate ' .. name .. ' already overridden; leaving it alone.')
+        ProjectTerm.warnOnce('atmosphere-owned-' .. name, 'Climate ' .. name .. ' already overridden; leaving it alone.')
     end
     return state
 end
@@ -121,8 +126,9 @@ local function apply(manager, name, id, target, elapsed)
     if not state.owned then return end
     local channel = state.channel
     target = clamp(target, channel:getMin(), channel:getMax())
+    state.target = target
     if state.current == nil then
-        state.current = clamp(channel:getInternalValue(), channel:getMin(), channel:getMax())
+        state.current = target -- immediate start/A-B comparison; later weather changes ease in
     end
     local alpha = clamp(elapsed / Settings.transitionMinutes, 0, 1)
     state.current = state.current + (target - state.current) * alpha
@@ -130,7 +136,7 @@ local function apply(manager, name, id, target, elapsed)
     channel:setEnableOverride(true)
 end
 
-local function update()
+local function update(immediate)
     if failed then return end
     local enabled, intensity, hazeScale, darknessScale, tintScale = preferences()
     if not Settings.enabled or not enabled or intensity <= 0 then
@@ -145,8 +151,12 @@ local function update()
     local clock, manager = getGameTime(), getClimateManager()
     if not clock or not manager then return end
     local minute = math.floor(clock:getWorldAgeHours() * 60)
-    if lastMinute and minute <= lastMinute then return end
-    local elapsed = lastMinute and clamp(minute - lastMinute, 1, 60) or 1
+    if lastMinute and minute < lastMinute then
+        release() -- a different world/clock must not retain the previous world channels
+        lastMinute = nil
+    end
+    if not immediate and lastMinute and minute == lastMinute then return end
+    local elapsed = immediate and Settings.transitionMinutes or (lastMinute and clamp(minute - lastMinute, 1, 60) or 1)
     lastMinute = minute
 
     local ok, err = pcall(function()
@@ -169,54 +179,104 @@ local function update()
         apply(manager, 'cloud', CM.FLOAT_CLOUD_INTENSITY,
             cloud + (math.max(cloud, Settings.cloudFloor) - cloud) * intensity, elapsed)
         apply(manager, 'fog', CM.FLOAT_FOG_INTENSITY,
-            math.max(fog, addedHaze), elapsed)
+            math.max(fog, addedHaze, preview == 'haze' and 0.35 or 0), elapsed)
         apply(manager, 'daylight', CM.FLOAT_DAYLIGHT_STRENGTH,
-            daylight * (1 - (1 - Settings.daylightFactor) * intensity * darknessScale), elapsed)
+            math.min(preview == 'night' and 0.10 or 1, daylight * (1 - (1 - Settings.daylightFactor) * intensity * darknessScale)), elapsed)
         apply(manager, 'ambient', CM.FLOAT_AMBIENT,
-            ambient * (1 - (1 - Settings.ambientFactor) * intensity * darknessScale), elapsed)
+            math.min(preview == 'night' and 0.25 or 1, ambient * (1 - (1 - Settings.ambientFactor) * intensity * darknessScale)), elapsed)
         apply(manager, 'globalLight', CM.FLOAT_GLOBAL_LIGHT_INTENSITY,
-            globalLight * (1 - (1 - Settings.globalLightFactor) * intensity * darknessScale), elapsed)
+            math.min(preview == 'night' and 0.20 or 1, globalLight * (1 - (1 - Settings.globalLightFactor) * intensity * darknessScale)), elapsed)
         apply(manager, 'desaturation', CM.FLOAT_DESATURATION,
             desaturation + (math.max(desaturation, Settings.desaturationFloor) - desaturation) * intensity, elapsed)
         applyColdTint(manager, CM.COLOR_GLOBAL_LIGHT,
             clamp(intensity * tintScale, 0, 2))
 
         if not logged then
-            print('[PROJECT TERM] Atmosphere climate layer active (single-player experimental).')
+            ProjectTerm.log('info', 'Atmosphere climate layer active (single-player experimental).')
             logged = true
         end
     end)
     if not ok then
         release()
         failed = true
-        print('[PROJECT TERM] Atmosphere disabled after climate error: ' .. tostring(err))
+        ProjectTerm.warnOnce('atmosphere-api', 'Atmosphere disabled after climate error: ' .. tostring(err))
     end
+end
+
+-- Read-only snapshot for debug UI; no save data or clock changes.
+function Atmosphere.getStatus()
+    local enabled, intensity = preferences()
+    local result = {enabled = enabled and intensity > 0 and not failed,
+        failed = failed, preview = preview, channels = {}}
+    for name, state in pairs(states) do
+        result.channels[name] = {owned = state.owned,
+            natural = state.channel:getInternalValue(), current = state.current,
+            target = state.target}
+    end
+    return result
+end
+
+function Atmosphere.report()
+    local status = Atmosphere.getStatus()
+    local parts = {'Atmosphere ' .. (status.enabled and 'ON' or 'OFF'),
+        'preview=' .. (preview == 'night' and 'night lighting only' or preview or 'none')}
+    for _, name in ipairs({'cloud', 'fog', 'daylight', 'ambient', 'globalLight', 'desaturation'}) do
+        local c = status.channels[name]
+        if c then
+            parts[#parts + 1] = name .. '=' .. (c.owned and
+                string.format('%.2f->%.2f (natural %.2f)', c.current or 0, c.target or 0, c.natural) or 'external')
+        end
+    end
+    ProjectTerm.log('INFO', table.concat(parts, '; '))
+    return status
+end
+
+-- Reversible render-channel previews, never simulated time or saved weather.
+function Atmosphere.setPreview(mode)
+    if mode ~= nil and mode ~= 'haze' and mode ~= 'night' then return false, 'Unknown preview' end
+    if mode ~= nil and not ProjectTerm.getConfig().Debug then return false, 'Enable debug mode for previews' end
+    if (isClient and isClient()) or (isServer and isServer()) then return false, 'Single-player only' end
+    local enabled, intensity = preferences()
+    if not enabled or intensity <= 0 or failed then return false, 'Atmosphere is disabled' end
+    preview = mode
+    update(true)
+    Atmosphere.report()
+    return not failed, failed and 'Climate API failure' or 'Preview updated'
 end
 
 Events.OnGameStart.Add(function()
     release()
     lastMinute, failed, logged, colorFailed = nil, false, false, false
     runtimeEnabled = true
-    update()
+    preview = nil
+    update(true)
+    Atmosphere.report()
 end)
-Events.EveryOneMinute.Add(update)
+Events.EveryOneMinute.Add(function() update(false) end)
 
-ProjectTerm = ProjectTerm or {}
-
+-- The context menu and F8 share one controller and one toggle state.
 function ProjectTerm.toggleAtmosphere()
     if (isClient and isClient()) or (isServer and isServer()) then return false end
     runtimeEnabled = not runtimeEnabled
-    if not runtimeEnabled then release() end
+    if not runtimeEnabled then preview = nil; release() end
     lastMinute = nil
-    print('[PROJECT TERM] Atmosphere comparison: ' .. (runtimeEnabled and 'ON' or 'OFF'))
-    if runtimeEnabled then update() end
+    if runtimeEnabled then update(true) end
+    Atmosphere.report()
     return runtimeEnabled
 end
 
--- Direct on/off comparison in single-player, including existing saves.
 if Events.OnKeyPressed then
     Events.OnKeyPressed.Add(function(key)
         if not Keyboard or key ~= Keyboard.KEY_F8 then return end
         ProjectTerm.toggleAtmosphere()
+    end)
+end
+
+-- Release the channels while the old world still exists.
+if Events.OnMainMenuEnter then
+    Events.OnMainMenuEnter.Add(function()
+        release()
+        preview = nil
+        lastMinute, failed, logged, colorFailed = nil, false, false, false
     end)
 end
