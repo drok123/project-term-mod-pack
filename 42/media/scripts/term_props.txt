@@ -1,0 +1,12 @@
+module ProjectTerm
+{
+    item SentinelWreck
+    {
+        DisplayName = Inert Sentinel Chassis,
+        DisplayCategory = Junk,
+        ItemType = base:normal,
+        Icon = ScrapMetal,
+        Weight = 12.0,
+        WorldStaticModel = Term_SilverSentinel,
+    }
+}

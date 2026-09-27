@@ -31,3 +31,7 @@ Added new-game sandbox controls for atmosphere, haze, and darkness using the Bui
 ## M1 first in-game load — 2026-09-25
 
 The user's `console.txt` and screenshots identify **42.20.4 b0bbce05d5**. Single-player enters the world with ProjectTermModPackB42 loaded; atmosphere values and both v0.3.0 startup messages appear once in the observed load. A night interior is visible. The explicit Mods-menu view, visual baseline, daytime/weather tests, save reload, and performance assessment remain open. Unrelated-looking game errors are present in the log, so no whole-log clean bill is claimed.
+
+## 0.4.2 integration repair
+
+Consolidated latest 0.4.1 branch with prior tested runtime fixes and full-geometry weapon repair. Kept Mod ID ProjectTermModPackB42 and haze strength. Restored SP kit/toggle plus optional previews/props/audio, fixed registry and loot regressions, added native-model/texture verification and complete-install hash checks. Hunter branch reviewed but not merged until its spawn/MP/lifecycle gates are repaired. New in-game weapon alignment and audio verification remain next.

@@ -1,0 +1,17 @@
+callbacks.menu(0, context, {}, false)
+assert(callbacks.give, "preserve v0.4.1 single-player kit without sandbox gate")
+assert(menu["PROJECT TERM: Toggle atmosphere (F8)"], "preserve context toggle")
+assert(not menu["Project Term: place skull and chassis"], "extra test controls opt-in")
+menu["PROJECT TERM: Enable extra test controls"]()
+assert(ProjectTerm.getConfig().Debug, "existing saves can enable advanced tests")
+callbacks.give = nil
+callbacks.menu(0, context, {}, true)
+assert(not callbacks.give, "test pass has no mutation")
+callbacks.menu(0, context, {}, false)
+assert(callbacks.give)
+callbacks.give()
+assert(#items == 51 and items[1] == "ProjectTerm.ArcPulseRifle" and items[2] == "ProjectTerm.ArcCell" and items[3] == "ProjectTerm.ArcCell")
+client = true
+callbacks.give()
+assert(#items == 51, "callback rechecks multiplayer")
+print("PASS debug: opt-in menu, bounded kit, multiplayer guarded")
